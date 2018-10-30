@@ -1,26 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import axios from 'axios'; 
+import logo from './Spacegram-logo-one.png'; 
 import './App.css';
 
 class App extends Component {
+  constructor() {
+    super() 
+
+  }
+  componentDidMount() {
+
+    // --- TODO credit Google for their API! ---
+
+    console.log('process', process.env.GOOGLE_NEWS_API_KEY); 
+
+    var url = 'https://newsapi.org/v2/everything?' +
+    'q=Nasa&' +
+    'from=2018-10-29&' +
+    'sortBy=popularity&' +
+    `apiKey=${process.env.GOOGLE_NEWS_API_KEY}`;
+
+    axios.get(url).then(response => {
+      console.log('response.data', response.data); 
+    }).catch(error => {
+      console.log('error fetching data', error); 
+    })
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <header className="header_class">
+        <div className="spacegram_logo">
+           <img className="logo" src={logo} alt=""/>
+        </div>
+      </header>
     );
   }
 }

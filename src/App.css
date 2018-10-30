@@ -1,4 +1,23 @@
-.App {
+.header_class {
+  width: 100%; 
+  height: 100px; 
+  background-image: url("Lightyear-navbar-background.png"); 
+}
+
+.spacegram_logo {
+  width: 400px; 
+  height: 100px; 
+}
+
+.logo {
+  min-width: 400px; 
+  min-height: 100px;
+  /* background-image: url("Spacegram-logo-one.png");  */
+}
+
+/* Delete eventually */
+
+/* .App {
   text-align: center;
 }
 
@@ -29,4 +48,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
