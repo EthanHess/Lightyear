@@ -5,6 +5,6 @@ const axios = require('axios');
 // const session = require('express-session');
 
 require('dotenv').config();
-massive(process.env.CONNECTION_STRING).then(db => app.set('db', db));
+//massive(process.env.CONNECTION_STRING).then(db => app.set('db', db));
 
 //Networking
