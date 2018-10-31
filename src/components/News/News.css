@@ -1,0 +1,29 @@
+.news_container {
+    width: 100vw; 
+    height: 100vh;
+}
+
+.news_table {
+    margin: 10px;
+    height: 90%; 
+    width: 50%; 
+    border-color: rgb(103, 252, 202); 
+    border-radius: 10px; 
+    border-width: 2px; 
+    background: darkblue; 
+}
+
+.feed_cell {
+    margin: 15px; 
+    height: 50%; 
+    border-color: rgb(103, 252, 202); 
+    border-radius: 10px; 
+    border-width: 2px; 
+    background: blue; 
+}
+
+.top_bar {
+    height: 100px; 
+    width: 100%; 
+    color: black; 
+}
