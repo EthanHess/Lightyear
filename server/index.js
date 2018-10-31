@@ -2,14 +2,34 @@ const massive = require('massive');
 const axios = require('axios');
 const express = require('express');
 const bodyPaser = require('body-parser');
-//const session = require('express-session');
+const session = require('express-session');
 
-const app = express();
+//Controllers
+const authController = require('./controllers/authController'); 
+
+
+
 
 require('dotenv').config();
-//massive(process.env.CONNECTION_STRING).then(db => app.set('db', db));
+massive(process.env.CONNECTION_STRING).then(db => app.set('db', db));
+
+const app = express();
+app.use(bodyPaser.json());
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  saveUninitialized: false,
+  resave: false,
+}));
+app.use(express.static(`${__dirname}/../build`));
 
 //Networking
+
+//Auth
+app.get('/auth/callback', authController.handleCallback); 
+app.get('/api/profile', authController.getProfile); //user data
+app.post('/api/logout', authController.logout); 
+app.get('/api/secure-data', authController.secureData); 
 
 //Listen
 const SERVER_PORT = process.env.SERVER_PORT;
