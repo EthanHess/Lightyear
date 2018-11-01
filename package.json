@@ -9,13 +9,19 @@
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.0.5"
+    "react-scripts": "2.0.5",
+    "youtube-embed-video": "^1.1.0"
   },
   "scripts": {
+    "now-start": "node server/index",
+    "deploy": "now --public --dotenv=.env.prod -d",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "now": {
+    "alias": "spacegramuniverse"
   },
   "eslintConfig": {
     "extends": "react-app"

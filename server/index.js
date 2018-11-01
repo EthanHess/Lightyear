@@ -42,3 +42,9 @@ const SERVER_PORT = process.env.SERVER_PORT;
 app.listen(SERVER_PORT, () => {
   console.log('Server listening on port ' + SERVER_PORT);
 });
+
+//Zeit specific
+const path = require('path')
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html')); 
+})

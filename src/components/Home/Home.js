@@ -9,12 +9,8 @@ export default class Home extends Component {
     constructor() {
         super() 
         this.state = {
-            
+            //Add props
         }
-    }
-
-    authHandler = () => {
-
     }
 
     //Both login/register go to Auth and will pass a different global state, but maybe not necessary when doing auth0
