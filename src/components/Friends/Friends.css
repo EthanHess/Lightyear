@@ -1,0 +1,14 @@
+.friends_container {
+    width: 100vw; 
+    height: 100vh;
+}
+
+.my_profile_container {
+    width: 50%; 
+    height: 100vh; 
+}
+
+.my_friends_container {
+    width: 50%; 
+    height: 100vh;
+}

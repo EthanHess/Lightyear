@@ -8,8 +8,6 @@ const session = require('express-session');
 const authController = require('./controllers/authController'); 
 
 
-
-
 require('dotenv').config();
 massive(process.env.CONNECTION_STRING).then(db => app.set('db', db));
 
@@ -29,7 +27,15 @@ app.use(express.static(`${__dirname}/../build`));
 app.get('/auth/callback', authController.handleCallback); 
 app.get('/api/profile', authController.getProfile); //user data
 app.post('/api/logout', authController.logout); 
-app.get('/api/secure-data', authController.secureData); 
+app.get('/api/secure-data', checkLoggedIn, authController.getSecureData); 
+
+function checkLoggedIn(req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    res.status(403).json({ message: 'Unauthorized' });
+  }
+}
 
 //Listen
 const SERVER_PORT = process.env.SERVER_PORT;

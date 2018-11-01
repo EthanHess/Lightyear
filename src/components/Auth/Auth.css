@@ -19,6 +19,7 @@
     display: flex; 
     justify-content: space-evenly; 
     flex-direction: column; 
+    box-shadow: 5px 5px 5px 5px rgb(19, 2, 245);
 }
 
 .auth_portal > img {
