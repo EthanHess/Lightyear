@@ -1,0 +1,1 @@
+select * from sg_posts where user_id = ${user_id} limit 1; 

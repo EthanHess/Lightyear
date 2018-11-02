@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 // import axios from 'axios'; 
 import logo from './Spacegram-logo-one.png'; 
-
-import {withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import './App.css';
 
 import routes from './routes'; 
@@ -11,7 +11,8 @@ class App extends Component {
   constructor() {
     super() 
     this.state = {
-      scrolling : false
+      scrolling : false, 
+      user: null
     }
     this.handleScroll = this.handleScroll.bind(this)
     this.addListener = this.addListener.bind(this)
@@ -68,4 +69,11 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+const mapStateToProps = (state) => {
+  return {
+      user: state.user
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(App));
+
