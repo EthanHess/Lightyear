@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 import './Friends.css'
-import GNUser from './gn_user.png'; 
+import GNUser from './gn_user.png';
+import axios from 'axios'; 
 
 export default class Friends extends Component {
     constructor() {
@@ -18,7 +19,24 @@ export default class Friends extends Component {
         this.setState({ allUserMode: !this.state.allUserMode })
     }
 
+    componentDidMount() {
+        this.getAllUsers(); 
+    }
+
+    getAllUsers = () => {
+        axios.get('/api/users').then(response => {
+            console.log('response data', response.data)
+            this.setState({ allUsers: response.data })
+        })
+    }
+
     render() {
+        const allUsersMapped = this.state.allUsers.map(user => {
+            return <div className="user_container">
+                <img src={user.profile_picture} alt=""/>
+                <div>{user.username}</div>
+            </div>
+        })
         //maps (friend array + all users array)
         //be able to update user info
         return (
@@ -28,6 +46,7 @@ export default class Friends extends Component {
                 </div>
                 <div className="my_friends_container">
                     <p>Space buddies</p>
+                    {allUsersMapped}
                 </div>
             </div>
         )

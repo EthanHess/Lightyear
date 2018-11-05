@@ -6,6 +6,7 @@ const session = require('express-session');
 
 //Controllers
 const authController = require('./controllers/authController'); 
+const friendsController = require('./controllers/friendsController'); 
 
 
 require('dotenv').config();
@@ -22,6 +23,7 @@ app.use(session({
 app.use(express.static(`${__dirname}/../build`));
 
 //Networking
+app.get('/api/users', friendsController.getAllUsers); 
 
 //Auth
 app.get('/auth/callback', authController.handleCallback); 

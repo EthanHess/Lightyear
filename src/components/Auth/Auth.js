@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; 
 import axios from 'axios'; 
 import './Auth.css'; 
+
 import noUser from './no_user.png'; 
 
 export default class Auth extends Component {
@@ -66,3 +67,5 @@ export default class Auth extends Component {
         )
     }
 }
+  
+  

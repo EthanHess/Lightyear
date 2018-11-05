@@ -1,4 +1,6 @@
-insert into sg_users (user_id, password, email, name, profile_picture)
+--TODO have another table where they create w/password (bcrypt etc.)
+
+insert into sg_users (user_id, email, name, profile_picture)
 values
-(${user_id}, ${password}, ${email}, ${name}, ${profile_picture})
+($1, $2, $3, $4)
 returning *; 

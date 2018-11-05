@@ -1,9 +1,8 @@
---- TODO how to handle Auth0? 
+--- TODO how to handle Auth0? We need a password as well if they're not using auth0
 
 create table if not exists sg_users ( 
     id serial primary key, 
     user_id text not null, 
-    password text not null,
     name text not null, 
     email text not null, 
     profile_picture text not null 

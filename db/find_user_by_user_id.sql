@@ -1,1 +1,1 @@
-select * from sg_users where user_id = ${user_id} limit 1; 
+select * from sg_users where user_id = $1 limit 1; 

@@ -84,7 +84,7 @@ export default class News extends Component {
             return <div className="feed_cell">
                 <p>{newsItem.title}</p>
                 <img src={newsItem.urlToImage} alt=""/>
-                <div>
+                <div className="button_container_news">
                     <button>Archive</button>
                     <button>Share</button>
                 </div>

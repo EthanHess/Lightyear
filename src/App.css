@@ -8,9 +8,53 @@
   padding-bottom: 0px; 
 }
 
+.right_nav_utils {
+  display: flex; 
+  flex-direction: row; 
+  justify-content: space-between; 
+  color: white; 
+  margin: auto; 
+}
+
+.right_nav_utils > img {
+  width: 80px; 
+  height: 80px;
+  margin: auto; 
+  border-radius: 40px; 
+  margin-left: 30%; 
+}
+
+.right_nav_utils > p {
+  color: white; 
+  height: 50%;
+  width: 100%; 
+  margin: auto; 
+  padding-left: 20px; 
+  font-family: 'Courier New', Courier, monospace; 
+  font-size: 24px; 
+}
+
+.right_nav_utils > button {
+  color: white; 
+  background: darkblue; 
+  margin: auto; 
+  width: 20%; 
+  height: 30%;
+}
+
+.header_container {
+  display: flex; 
+  flex-direction: row; 
+}
+
 .spacegram_logo {
   width: 400px; 
   height: 100px; 
+}
+
+.right_nav_utils {
+  height: 100px;
+  width: 500px; 
 }
 
 .logo {

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-// import axios from 'axios'; 
+import axios from 'axios'; 
 import logo from './Spacegram-logo-one.png'; 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import helmet from './helmet.png'; 
 import './App.css';
 
 import routes from './routes'; 
@@ -12,11 +13,21 @@ class App extends Component {
     super() 
     this.state = {
       scrolling : false, 
-      user: null
+      user: null,
+      username: '', 
+      userImage: ''
     }
     this.handleScroll = this.handleScroll.bind(this)
     this.addListener = this.addListener.bind(this)
     this.removeListener = this.removeListener.bind(this)
+    this.logout = this.logout.bind(this)
+  }
+
+  logout() {
+    console.log('logout called')
+    axios.post('/api/logout').then(() => {
+      this.setState({ user: null });
+    });
   }
 
   //Listen for scrolling
@@ -40,6 +51,20 @@ class App extends Component {
   //Lifecycle
   componentDidMount() {
     this.addListener() 
+    this.getProfileInfo()
+  }
+
+  getProfileInfo = () => {
+    axios.get('/api/profile').then(response => {
+      console.log('response data for login', response.data)
+      if (response.data.user.name !== null && response.data.user.profile_picture !== null) {
+        this.setState({ 
+          user: response.data, 
+          username: response.data.user.name, 
+          userImage: response.data.user.profile_picture
+        })
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -47,12 +72,20 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props)
+    const exists = this.state.user !== null; 
+    const prfPic = exists ? this.state.userImage : helmet; 
     return (
       <div> 
         <header className="header_class">
-          <div className="spacegram_logo">
-            <img className="logo" src={logo} alt=""/>
+          <div className="header_container">
+            <div className ="spacegram_logo">
+                <img className="logo" src={logo} alt=""/>
+            </div>
+            <div className ="right_nav_utils">
+              <img src={prfPic} alt=""/> 
+              <p>{exists ? this.state.username : "Login"}</p>
+              <button onClick={this.logout}>Logout</button>
+            </div>
          </div>
         </header>
         <main className="main_body">
@@ -64,7 +97,6 @@ class App extends Component {
           </div>
         </main>
       </div>
-      
     );
   }
 }

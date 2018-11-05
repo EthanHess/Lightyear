@@ -39,7 +39,7 @@
     margin-left: 15px; 
     margin-right: 15px; 
     margin-bottom: 15px; 
-    max-width: 80%;
+    max-width: 60%;
     max-height: 75%; 
     border-radius: 10px;
     box-shadow: 5px 5px 5px 5px rgb(127, 189, 214);
@@ -154,3 +154,20 @@
     margin-left: 15%; 
 }
 
+.button_container_news {
+    width: 100%; 
+    height: 40px;
+    display: flex; 
+    justify-content: space-evenly; 
+}
+
+.button_container_news > button {
+    width: 25%; 
+    color: white; 
+    background: darkblue; 
+    border-radius: 10px; 
+}
+
+.button_container_news > button:hover {
+    background: blue; 
+}

@@ -24,11 +24,11 @@ module.exports = {
         // User info >>> session and database.
         function storeUserInfoInDatabse(userInfo) {
             const userData = userInfo.data;
-            return req.app.get('db').find_user_by_auth0_id(userData.sub).then(users => {
+            return req.app.get('db').find_user_by_user_id(userData.sub).then(users => {
                 if (users.length) { // Users exist
                     const user = users[0]; 
                     req.session.user = user;
-                    req.redirect('/'); // Take them to home page
+                    res.redirect('/'); // Take them to home page
                 } else {
                     const newUserData = [userData.sub, userData.email, userData.name, userData.picture];
                     return req.app.get('db').create_user(newUserData).then(newUsers => {
@@ -49,9 +49,11 @@ module.exports = {
         })
     }, 
     getProfile: (req, res) => {
+        console.log('USER', req.session.user)
         res.json({ user: req.session.user });
     }, 
     logout: (req, res) => {
+        console.log('req --- res', req, res); 
         req.session.destroy();
         res.send();
     }, 
