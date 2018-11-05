@@ -32,9 +32,11 @@ export default class Friends extends Component {
 
     render() {
         const allUsersMapped = this.state.allUsers.map(user => {
+            //Check user if to see if user is following, then set button title/action accordingly
             return <div className="user_container">
                 <img src={user.profile_picture} alt=""/>
-                <div>{user.username}</div>
+                <p>{user.name}</p>
+                <button>Follow</button>
             </div>
         })
         //maps (friend array + all users array)

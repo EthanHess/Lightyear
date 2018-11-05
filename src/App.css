@@ -71,8 +71,28 @@
   justify-content: space-evenly; 
 }
 
+.home_parent {
+  padding-top: 0px; 
+  background: black; 
+  height: 200vh; 
+  width: 100vw; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-evenly; 
+}
+
+.bottom_footer {
+  background: rgb(3, 3, 85); 
+  width: 100%; 
+  height: 100px; 
+}
+
 .intro_container {
   width: 100vw; 
+  height: 100vh; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-evenly; 
 }
 
 .text_intro {

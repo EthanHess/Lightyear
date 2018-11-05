@@ -4,6 +4,7 @@ import logo from './Spacegram-logo-one.png';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import helmet from './helmet.png'; 
+
 import './App.css';
 
 import routes from './routes'; 
@@ -57,19 +58,21 @@ class App extends Component {
   getProfileInfo = () => {
     axios.get('/api/profile').then(response => {
       console.log('response data for login', response.data)
-      if (response.data.user.name !== null && response.data.user.profile_picture !== null) {
         this.setState({ 
           user: response.data, 
           username: response.data.user.name, 
           userImage: response.data.user.profile_picture
         })
-      }
+    }).catch(error => {
+      console.log('get profile info error', error)
     })
   }
 
   componentWillUnmount() {
     this.removeListener()
   }
+
+  //TODO hide logout button when user isn't logged in
 
   render() {
     const exists = this.state.user !== null; 
@@ -90,11 +93,6 @@ class App extends Component {
         </header>
         <main className="main_body">
           {routes}
-          <div className="space_animation_container">
-            <div className="space_animation">
-
-            </div>
-          </div>
         </main>
       </div>
     );

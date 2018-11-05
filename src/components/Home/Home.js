@@ -5,6 +5,8 @@ import news from './news.png';
 import friends from './friends.png'; 
 import spaceLock from './space_lock.png';
 
+import BottomHome from './BottomHome'
+
 export default class Home extends Component {
     constructor() {
         super() 
@@ -16,7 +18,8 @@ export default class Home extends Component {
     //Both login/register go to Auth and will pass a different global state, but maybe not necessary when doing auth0
     render() {
         return (
-            <div className="intro_container">
+            <div className="home_parent">
+              <div className="intro_container">
               <div className="text_intro">
                 <p>An online community for Astronomy geeks</p>
               </div>
@@ -39,7 +42,9 @@ export default class Home extends Component {
                     <img src={spaceLock} alt=""/>
                     <button onClick={() => this.props.history.push('/auth')} className="main_button">Sign Up</button>
               </div>
-          </div>
+             </div>
+                <BottomHome/>
+            </div>
         )
     }
 }   

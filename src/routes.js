@@ -9,7 +9,7 @@ import SpaceStation from './components/SpaceStation/SpaceStation';
 
 export default (
     <Switch>
-        <Route component= { Home } exact path = "/"/>
+        <Route component={ Home } exact path="/"/>
         <Route component={ Auth } path="/auth"/>
         <Route component={ Friends } path="/friends"/>
         <Route component={ News } exact path="/news"/>
