@@ -1,5 +1,5 @@
 const massive = require('massive');
-const axios = require('axios');
+//const axios = require('axios');
 const express = require('express');
 const bodyPaser = require('body-parser');
 const session = require('express-session');
@@ -7,6 +7,7 @@ const session = require('express-session');
 //Controllers
 const authController = require('./controllers/authController'); 
 const friendsController = require('./controllers/friendsController'); 
+const archiveController = require('./controllers/archiveController'); 
 
 
 require('dotenv').config();
@@ -31,6 +32,12 @@ app.get('/api/profile', authController.getProfile); //user data
 app.post('/api/logout', authController.logout); 
 app.get('/api/secure-data', checkLoggedIn, authController.getSecureData); 
 
+//Archives (add update)
+app.post('/api/archives', archiveController.createArchive); 
+app.get('/api/archives', archiveController.getAllArchives); 
+app.delete('/api/archives/:id', archiveController.deleteArchive); 
+
+//Posts
 function checkLoggedIn(req, res, next) {
   if (req.session.user) {
     next();

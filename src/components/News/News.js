@@ -8,6 +8,8 @@ import space from './space.png';
 import video from './video.png'; 
 import collection from './collection.png'; 
 
+import NewsItem from './NewsItem'; 
+
 export default class News extends Component {
     constructor() {
         super()
@@ -37,8 +39,19 @@ export default class News extends Component {
         }
     }
 
-    archive = (val) => {
+    archive = (index) => {
+        console.log('index', index)
+        // const archive = this.state.archives[index]; 
+        // const newArchive = {
 
+        // }
+        // axios.put()
+    }
+
+    fetchArchives = () => {
+        axios.get('/api/archives').then(response => {
+            this.setState({ archive: response.data })
+        })
     }
 
     share = (val) => {
@@ -77,18 +90,16 @@ export default class News extends Component {
 
     componentDidMount() {
         this.fetchNews();
+        this.fetchArchives(); 
     }
 
     render() {
-        const mainFeedMapped = this.state.mainNewsFeed.map(newsItem => {
-            return <div className="feed_cell">
-                <p>{newsItem.title}</p>
-                <img src={newsItem.urlToImage} alt=""/>
-                <div className="button_container_news">
-                    <button>Archive</button>
-                    <button>Share</button>
-                </div>
-            </div>
+        const mainFeedMapped = this.state.mainNewsFeed.map((newsItem, index) => {
+            return <NewsItem createFn={this.archive} 
+            title={newsItem.title}
+            image={newsItem.urlToImage}
+            id={newsItem.publishedAt}
+            index={index}/> 
         })
 
         const mappedYoutubeVideos = this.state.mainVideoFeed.map(video => {
