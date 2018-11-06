@@ -1,13 +1,14 @@
 module.exports = {
-    //Description could be from title or NASA, mediaUrl could be video/pic
     createArchive: (req, res, next) => {
+        console.log('create archive', req); 
         const dbInstance = req.app.get('db'); 
-        const { userId, mediaUrl, description } = req.body; 
-        dbInstance.create_archive([userId, mediaUrl, description])
+        const { userId, mediaUrl, description, mainURL } = req.body; 
+        console.log('req.body', req.body)
+        dbInstance.create_archive([userId, mediaUrl, description, mainURL])
         .then( ()=> res.sendStatus(200))
         .catch(error => {
             res.status(500).send({errorMessage: "Oops! Something went wrong. Our engineers have been informed!"});
-            console.log(error)
+            console.log('create archive error', error)
         })
     }, 
     getArchiveById: (req, res, next) => {
@@ -17,7 +18,8 @@ module.exports = {
     }, 
     getAllArchives: (req, res, next) => {
         const dbInstance = req.app.get('db'); 
-        dbInstance.get_archived_for_user()
+        const { userId } = req.body; 
+        dbInstance.get_archives_for_user(userId)
         .then(archives => res.status(200).send(archives))
         .catch(error => {
             res.status(500).send({errorMessage: "Oops! Something went wrong. Our engineers have been informed!"});

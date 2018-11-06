@@ -34,7 +34,7 @@ app.get('/api/secure-data', checkLoggedIn, authController.getSecureData);
 
 //Archives (add update)
 app.post('/api/archives', archiveController.createArchive); 
-app.get('/api/archives', archiveController.getAllArchives); 
+app.post('/api/archives/all', archiveController.getAllArchives); 
 app.delete('/api/archives/:id', archiveController.deleteArchive); 
 
 //Posts

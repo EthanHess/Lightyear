@@ -10,5 +10,13 @@ module.exports = {
             res.status(500).send({errorMessage: "Oops! Something went wrong. Our engineers have been informed!"});
             console.log(error)
         })
+    }, 
+    followUser: (req, res, next) => {
+        const dbInstance = req.app.get('db'); 
+        //TODO complete
+    }, 
+    unfollowUser: (req, res, next) => {
+        const dbInstance = req.app.get('db'); 
+        //TODO complete
     }
 }

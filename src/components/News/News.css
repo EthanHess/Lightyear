@@ -127,6 +127,7 @@
 .collection {
     width: 50%; 
     height: 100vh;
+    overflow: scroll;
 }
 
 .sub_header {
@@ -170,4 +171,27 @@
 
 .button_container_news > button:hover {
     background: blue; 
+}
+
+
+.archive_container {
+    margin-top: 10%; 
+    width: 50%; 
+    height: 50%; 
+    margin-left: 25%; 
+    display: flex; 
+    flex-direction: column; 
+    background: rgb(9, 4, 71); 
+    border-radius: 10px; 
+}
+
+.archive_container > img {
+    max-width: 80%; 
+    max-height: 80%; 
+    margin: auto; 
+}
+
+.archive_container > p {
+    text-align: center; 
+    color: white;
 }

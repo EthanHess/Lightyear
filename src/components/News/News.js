@@ -8,9 +8,12 @@ import space from './space.png';
 import video from './video.png'; 
 import collection from './collection.png'; 
 
+import { connect } from 'react-redux'; 
+import { loginUser } from '..//../ducks/reducer'; 
+
 import NewsItem from './NewsItem'; 
 
-export default class News extends Component {
+class News extends Component {
     constructor() {
         super()
         this.state = {
@@ -18,7 +21,8 @@ export default class News extends Component {
             mainVideoFeed: [],
             searchString: '', 
             videoMode: false, 
-            archives: []
+            archives: [], 
+            user: null
         }
         this.fetchNews = this.fetchNews.bind(this); 
         this.fetchYoutubeVideos = this.fetchYoutubeVideos.bind(this); 
@@ -40,17 +44,41 @@ export default class News extends Component {
     }
 
     archive = (index) => {
-        console.log('index', index)
-        // const archive = this.state.archives[index]; 
-        // const newArchive = {
+        console.log('user --- news', this.props.user.user.user_id)
 
-        // }
-        // axios.put()
+        if (this.props.user.user.user_id === null) {
+            alert('Please create an account or log in')
+            return
+        }
+
+        const array = this.state.videoMode ? this.state.mainVideoFeed : this.state.mainNewsFeed; 
+        console.log('index', index)
+        const archive = array[index]; 
+        console.log('item to archive', archive)
+
+        //TODO this will only be for news, not YouTube 
+        const newNewsArchive = {
+            userId: this.props.user.user.user_id, 
+            mediaUrl: archive.urlToImage,
+            description: archive.title, 
+            mainURL: archive.url
+        } 
+        console.log('new archive', newNewsArchive); 
+        axios.post('/api/archives', newNewsArchive).then(response => {
+            this.setState({ archives: response.data })
+        }).catch(error => {
+            console.log('error', error)
+        })
     }
 
     fetchArchives = () => {
-        axios.get('/api/archives').then(response => {
-            this.setState({ archive: response.data })
+        if (this.props.user === null || this.props.user.user.userId === 'undefined') { return }
+        const request = { userId: this.props.user.user.user_id }
+        axios.post('/api/archives/all', request).then(response => {
+            console.log('arch', response.data)
+            this.setState({ archives: response.data })
+        }).catch(error => {
+            console.log('error fetching archives', error)
         })
     }
 
@@ -65,7 +93,7 @@ export default class News extends Component {
     //Returns a lot (slow), maybe return 10 - 20 or load/render in pieces
     //TODO add search param to string via ${}
     fetchYoutubeVideos() {
-        var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=outerspacenasa&chart=mostPopular&maxResults=50&type=video&videoCategoryId=10&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`;
+        var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=outerspacenasa&chart=mostPopular&maxResults=10&type=video&videoCategoryId=10&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`;
         axios.get(url).then(response => {
             console.log('V RESPONSE', response.data["items"])
             this.setState({ mainVideoFeed: response.data["items"] })
@@ -110,8 +138,15 @@ export default class News extends Component {
             </div>
         })
 
+        //TODO add ref to main URL 
+
+        //TODO still crashes on add 
+
         const archives = this.state.archives.map(archive => {
-            return <div></div>
+            return <div className="archive_container">
+                <img src={archive.post_media} alt=""/>
+                <p>{archive.title}</p>
+            </div>
         })
 
         const vMode = this.state.videoMode; 
@@ -147,3 +182,11 @@ export default class News extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps, { loginUser })(News); 

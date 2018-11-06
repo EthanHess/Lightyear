@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-    user: '' //Should be username/picture? 
+    user: null //Should be username/picture? 
 }
 
 const LOGIN_USER = "LOGIN_USER"; 
@@ -13,9 +13,10 @@ export default function reducer(state = INITIAL_STATE, action) {
     }
 }
 
-export function loginUser(name) {
+export function loginUser(user) {
+    console.log('login user called from reducer', user)
     return {
         type: LOGIN_USER, 
-        payload: name //This will be user object or username + photo URL
+        payload: user //This will be user object or username + photo URL
     }
 }

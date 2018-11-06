@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'; 
 import logo from './Spacegram-logo-one.png'; 
 import { connect } from 'react-redux';
+import { loginUser } from './ducks/reducer'; 
 import { withRouter } from 'react-router-dom';
 import helmet from './helmet.png'; 
 
@@ -58,6 +59,7 @@ class App extends Component {
   getProfileInfo = () => {
     axios.get('/api/profile').then(response => {
       console.log('response data for login', response.data)
+        this.props.loginUser(response.data)
         this.setState({ 
           user: response.data, 
           username: response.data.user.name, 
@@ -105,5 +107,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(App));
+export default withRouter(connect(mapStateToProps, { loginUser })(App));
 

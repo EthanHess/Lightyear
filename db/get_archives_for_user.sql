@@ -1,1 +1,1 @@
-select * from sg_archives where user_id = ${user_id} limit 1; 
+select * from sg_archives where author_id = $1; 

@@ -1,6 +1,6 @@
 --- TODO update params here
 
-insert into sg_archives (author_id, title, post_media) 
+insert into sg_archives (author_id, post_media, title, main_url) 
 values 
-(${author_id}, ${title}, ${post_media})
+($1, $2, $3, $4)
 returning *; 

@@ -39,6 +39,9 @@ export default class Friends extends Component {
                 <button>Follow</button>
             </div>
         })
+
+        const title = this.state.allUserMode ? "All Users" : "Following"
+
         //maps (friend array + all users array)
         //be able to update user info
         return (
@@ -48,6 +51,7 @@ export default class Friends extends Component {
                 </div>
                 <div className="my_friends_container">
                     <p>Space buddies</p>
+                    <button onClick={this.updateAllUserMode}>{title}</button>
                     {allUsersMapped}
                 </div>
             </div>

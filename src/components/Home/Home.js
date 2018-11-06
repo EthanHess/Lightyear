@@ -17,6 +17,7 @@ export default class Home extends Component {
 
     //Both login/register go to Auth and will pass a different global state, but maybe not necessary when doing auth0
     render() {
+        
         return (
             <div className="home_parent">
               <div className="intro_container">
@@ -43,7 +44,7 @@ export default class Home extends Component {
                     <button onClick={() => this.props.history.push('/auth')} className="main_button">Sign Up</button>
               </div>
              </div>
-                <BottomHome/>
+                <BottomHome router={this.props}/>
             </div>
         )
     }

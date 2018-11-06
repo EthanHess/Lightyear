@@ -17,6 +17,16 @@ create table if not exists sg_posts (
     post_media text not null --- Can be null? 
 ); 
 
+create table if not exists sg_archives (
+    id serial primary key, 
+    author_id text not null, 
+    post_media text not null, 
+    title text not null, 
+    main_url text not null
+); 
+
+--TODO add likes and followers
+
 -- JOIN EXAMPLE
 -- SELECT helo_posts.author_id, helo_users.auth0_id, helo_posts.title, helo_users.profile_picture
 -- FROM helo_posts
