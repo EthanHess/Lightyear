@@ -10,6 +10,7 @@ import collection from './collection.png';
 
 import { connect } from 'react-redux'; 
 import { loginUser } from '..//../ducks/reducer'; 
+import { logoutUser } from '..//../ducks/reducer'; 
 
 import NewsItem from './NewsItem'; 
 
@@ -44,17 +45,12 @@ class News extends Component {
     }
 
     archive = (index) => {
-        console.log('user --- news', this.props.user.user.user_id)
-
         if (this.props.user.user.user_id === null) {
             alert('Please create an account or log in')
             return
         }
-
         const array = this.state.videoMode ? this.state.mainVideoFeed : this.state.mainNewsFeed; 
-        console.log('index', index)
         const archive = array[index]; 
-        console.log('item to archive', archive)
 
         //TODO this will only be for news, not YouTube 
         const newNewsArchive = {
@@ -63,22 +59,33 @@ class News extends Component {
             description: archive.title, 
             mainURL: archive.url
         } 
-        console.log('new archive', newNewsArchive); 
         axios.post('/api/archives', newNewsArchive).then(response => {
-            this.setState({ archives: response.data })
+            // console.log('response data after post archive', response.data)
+            // this.setState({ archives: response.data })
+            this.fetchArchives(); 
         }).catch(error => {
             console.log('error', error)
         })
     }
 
     fetchArchives = () => {
-        if (this.props.user === null || this.props.user.user.userId === 'undefined') { return }
+        if (this.props.user === undefined || this.props.user === null) { return }
+        if (this.props.user.user === undefined || null) { return }
+        if (this.props.user.user.user_id === undefined || null) { return }
         const request = { userId: this.props.user.user.user_id }
         axios.post('/api/archives/all', request).then(response => {
             console.log('arch', response.data)
             this.setState({ archives: response.data })
         }).catch(error => {
             console.log('error fetching archives', error)
+        })
+    }
+
+    deleteArchive = (id) => {
+        if (this.props.user.user.user_id === null || this.props.user.user.user_id === undefined) { return }
+        const { author_id } = this.props.user.user.user_id; 
+        axios.delete(`/api/archived/${author_id}/${id}`).then(response => {
+            this.setState({ archives: response.data })
         })
     }
 
@@ -122,6 +129,7 @@ class News extends Component {
     }
 
     render() {
+        console.log('props', this.props)
         const mainFeedMapped = this.state.mainNewsFeed.map((newsItem, index) => {
             return <NewsItem createFn={this.archive} 
             title={newsItem.title}
@@ -146,6 +154,7 @@ class News extends Component {
             return <div className="archive_container">
                 <img src={archive.post_media} alt=""/>
                 <p>{archive.title}</p>
+                <button onClick={this.deleteArchive(archive.id)}>Delete</button>
             </div>
         })
 
@@ -189,4 +198,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { loginUser })(News); 
+export default connect(mapStateToProps, { loginUser, logoutUser })(News); 

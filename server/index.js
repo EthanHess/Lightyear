@@ -35,7 +35,7 @@ app.get('/api/secure-data', checkLoggedIn, authController.getSecureData);
 //Archives (add update)
 app.post('/api/archives', archiveController.createArchive); 
 app.post('/api/archives/all', archiveController.getAllArchives); 
-app.delete('/api/archives/:id', archiveController.deleteArchive); 
+app.delete('/api/archives/:author_id/:id', archiveController.deleteArchive); 
 
 //Posts
 function checkLoggedIn(req, res, next) {

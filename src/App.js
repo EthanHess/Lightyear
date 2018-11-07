@@ -3,6 +3,7 @@ import axios from 'axios';
 import logo from './Spacegram-logo-one.png'; 
 import { connect } from 'react-redux';
 import { loginUser } from './ducks/reducer'; 
+import { logoutUser } from './ducks/reducer'; 
 import { withRouter } from 'react-router-dom';
 import helmet from './helmet.png'; 
 
@@ -28,6 +29,7 @@ class App extends Component {
   logout() {
     console.log('logout called')
     axios.post('/api/logout').then(() => {
+      this.props.logoutUser(); 
       this.setState({ user: null });
     });
   }
@@ -107,5 +109,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { loginUser })(App));
+export default withRouter(connect(mapStateToProps, { loginUser, logoutUser })(App));
 
