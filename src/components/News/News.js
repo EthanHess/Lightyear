@@ -82,10 +82,14 @@ class News extends Component {
     }
 
     deleteArchive = (id) => {
+        //TODO safety check here
         if (this.props.user.user.user_id === null || this.props.user.user.user_id === undefined) { return }
-        const { author_id } = this.props.user.user.user_id; 
-        axios.delete(`/api/archived/${author_id}/${id}`).then(response => {
-            this.setState({ archives: response.data })
+        const author_id = this.props.user.user.user_id; 
+        console.log('author id + id', author_id, id)
+        axios.delete(`/api/archives/${author_id}/${id}`).then(response => {
+            this.fetchArchives()
+        }).catch(error => {
+            console.log('error deleting archive', error)
         })
     }
 
@@ -154,7 +158,7 @@ class News extends Component {
             return <div className="archive_container">
                 <img src={archive.post_media} alt=""/>
                 <p>{archive.title}</p>
-                <button onClick={this.deleteArchive(archive.id)}>Delete</button>
+                <button onClick={() => this.deleteArchive(archive.id)}>Delete</button>
             </div>
         })
 
