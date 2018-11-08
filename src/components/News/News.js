@@ -42,7 +42,7 @@ class News extends Component {
         } else {
             this.fetchNews()
         }
-    }
+    } 
 
     archive = (index) => {
         if (this.props.user.user.user_id === null) {
@@ -69,9 +69,11 @@ class News extends Component {
     }
 
     fetchArchives = () => {
+
         if (this.props.user === undefined || this.props.user === null) { return }
         if (this.props.user.user === undefined || null) { return }
         if (this.props.user.user.user_id === undefined || null) { return }
+
         const request = { userId: this.props.user.user.user_id }
         axios.post('/api/archives/all', request).then(response => {
             console.log('arch', response.data)
@@ -87,6 +89,7 @@ class News extends Component {
         const author_id = this.props.user.user.user_id; 
         console.log('author id + id', author_id, id)
         axios.delete(`/api/archives/${author_id}/${id}`).then(response => {
+            console.log('arch', response.data)
             this.fetchArchives()
         }).catch(error => {
             console.log('error deleting archive', error)

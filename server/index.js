@@ -8,7 +8,7 @@ const session = require('express-session');
 const authController = require('./controllers/authController'); 
 const friendsController = require('./controllers/friendsController'); 
 const archiveController = require('./controllers/archiveController'); 
-
+const postController = require('./controllers/postController'); 
 
 require('dotenv').config();
 massive(process.env.CONNECTION_STRING).then(db => app.set('db', db));
@@ -36,6 +36,11 @@ app.get('/api/secure-data', checkLoggedIn, authController.getSecureData);
 app.post('/api/archives', archiveController.createArchive); 
 app.post('/api/archives/all', archiveController.getAllArchives); 
 app.delete('/api/archives/:author_id/:id', archiveController.deleteArchive); 
+
+//Posts (add update, and fetching queries)
+app.get('/api/posts', postController.getAllPosts); 
+app.post('/api/posts', postController.createPost); 
+app.delete('/api/posts/:authorId/:id', postController.deletePost); 
 
 //Posts
 function checkLoggedIn(req, res, next) {

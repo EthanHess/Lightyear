@@ -34,7 +34,6 @@ module.exports = {
     deleteArchive: (req, res, next) => {
         const dbInstance = req.app.get('db'); 
         const { params } = req; 
-        // console.log('query desc', query.desc)
         dbInstance.delete_archive([params.author_id, params.id])
         .then( () => res.sendStatus(200))
         .catch( error => {

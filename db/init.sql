@@ -10,12 +10,15 @@ create table if not exists sg_users (
 
 create table if not exists sg_posts (
     id serial primary key, 
-    user_id int references sg_users (id), 
+    -- user_id int references sg_users (id), 
+    user_id text not null,
     title text not null, 
     author_name text not null, 
     author_image text not null, 
     post_media text not null --- Can be null? 
 ); 
+
+--- TODO may want to reference id 
 
 create table if not exists sg_archives (
     id serial primary key, 
@@ -23,6 +26,12 @@ create table if not exists sg_archives (
     post_media text not null, 
     title text not null, 
     main_url text not null
+); 
+
+create table if not exists sg_following (
+    id serial primary key,
+    follower_id text not null references sg_users (id), 
+    following_id text not null references sg_users (id)
 ); 
 
 --TODO add likes and followers
