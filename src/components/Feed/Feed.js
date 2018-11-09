@@ -1,34 +1,43 @@
 import React, { Component } from 'react';
-import ImageUploader from 'react-images-upload';
 import PostContainer from './PostContainer'; 
+import UploadContainer from './UploadContainer'; 
+import ToggleHeader from './ToggleHeader'; 
 import './Feed.css'; 
 import axios from 'axios'; 
 
-import placeholder from './pic-placeholder.png'; 
-
+//Redux
 import { connect } from 'react-redux'; 
 import { loginUser } from '..//../ducks/reducer'; 
 import { logoutUser } from '..//../ducks/reducer'; 
+
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dmqhrqwc2/image/upload';
+// const CLOUDINARY_FETCH_UPLOAD_URL = 'https://res.cloudinary.com/dmqhrqwc2'
 
 class Feed extends Component {
     constructor() {
         super()
         this.state = {
+            uploadedFileCloudinaryUrl: '', 
             user: null, 
             chosenPic: '', 
             posts: [], 
             postCaption: '',
-            mineOnly: false //show only my posts, can edit/delete
+            mineOnly: false, //show only my posts, can edit/delete
+            displayHeader: true //shows upload div
         }
     }
     //When they choose an image
     onDrop = (picture) => {
         console.log('chosen pic', picture[0].name) //picture is array, rename? 
-        this.setState({ chosenPic: URL.createObjectURL(picture[0]) })
+        this.handleImageUpload(picture)
     }
 
     componentDidMount() {
         this.fetchFeed()
+    }
+
+    toggleDisplayHeader = () => {
+        this.setState({ displayHeader: !this.state.displayHeader})
     }
 
     fetchFeed = () => {
@@ -49,36 +58,64 @@ class Feed extends Component {
         }  
     }
 
+    handleImageUpload = (files) => {
+        axios.get('/api/upload').then(response => {
+        let formData = new FormData();
+        formData.append("signature", response.data.signature)
+        formData.append("api_key", "288326384771891")
+        formData.append("timestamp", response.data.timestamp)
+        formData.append("file", files[0]);
+        return axios.post(CLOUDINARY_UPLOAD_URL, formData).then(response => {
+            console.log('upload cld response', response.data);
+            this.setState({
+                 uploadedFileCloudinaryUrl: response.data.secure_url, 
+            })
+        }).catch(error => { console.log('upload cld error', error) }) 
+        })
+    }     
+
     monitorTextChange = (val) => {
         this.setState({ postCaption: val})
     }  
 
     newPost = () => {
         console.log('this.props.user in feed', this.props.user)
-        if (this.props.user === undefined) { alert('please sign in') }
+        if (this.props.user === undefined || this.props.user === null) { alert('Please sign in'); return }
         const { user } = this.props; 
+        if (this.state.uploadedFileCloudinaryUrl === '') { alert('Please add media'); return }
         const newPost = {
             user_id: user.user.user_id, 
             title: this.state.postCaption, 
             author_name: user.user.name, 
             author_image: user.user.profile_picture, 
-            post_media: this.state.chosenPic //Make sure this works, is from URL.createObjectURL 
+            post_media: this.state.uploadedFileCloudinaryUrl
         }
-        console.log('new post', newPost)
         axios.post('/api/posts', newPost).then(response => {
-            console.log('reponse', response.data)
+            console.log('response from cld post', response.data)
+            this.setState({
+                uploadedFileCloudinaryUrl: '',
+                postCaption: '', 
+                displayHeader: false
+            })
             this.fetchFeed()
         }).catch(error => {
+
+            //Do this? 
+            this.setState({
+                uploadedFileCloudinaryUrl: '',
+                postCaption: '', 
+                displayHeader: false
+            })
             console.log('error uploading new post', error)
         })
     }
 
     //TODO expand and shrink upload box, shoulnd't show when they've posted
     render() {
-        //Header pic for post
-        const pic = this.state.chosenPic ? this.state.chosenPic : placeholder
+
         //Map feed
-        const postsMapped = this.state.posts.map(post => {
+        const arrayToMap = this.state.posts.reverse()
+        const postsMapped = arrayToMap.map(post => {
             return <PostContainer id={post.id} 
             authorImage={post.author_image}
             postMedia={post.post_media}
@@ -88,21 +125,18 @@ class Feed extends Component {
             /> 
         })
 
+        const headerCompToDisplay = this.state.displayHeader === true ? 
+        <UploadContainer 
+            monitorFn={this.monitorTextChange} 
+            newPostFn={this.newPost} 
+            chosenPic={this.state.uploadedFileCloudinaryUrl}
+            /> 
+        : <ToggleHeader toggleFn={this.toggleDisplayHeader}/>
+
         return (
             <div className="feed_parent">
-                <div className="upload_header"></div>
-                    <div className="image_upload_container">
-                    <ImageUploader
-                    className="image_uploader"
-                    withIcon={true}
-                    buttonText='Choose images'
-                    onChange={this.onDrop}
-                    imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                    maxFileSize={5242880}
-                    />
-                    <img src={pic} alt=""/>
-                    <input onChange={ (e) => this.monitorTextChange(e.target.value)}></input>
-                    <button onClick={this.newPost}>Post</button>
+                <div className="upload_header">
+                    {headerCompToDisplay}
                 </div>
                 <div className="main_feed">
                     {postsMapped}

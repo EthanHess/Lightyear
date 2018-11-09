@@ -12,7 +12,6 @@ export default class PostContainer extends Component {
     //TODO add edit/delete button for own post (pass fns via props)
     render() {
         const { id, authorImage, postMedia, authorName, title, authorId } = this.props; 
-        console.log('ids', id, authorId)
         return (
             <div className="post_container">
                 <div className="post_top_div">

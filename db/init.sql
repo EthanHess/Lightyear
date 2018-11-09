@@ -34,6 +34,14 @@ create table if not exists sg_following (
     following_id text not null references sg_users (id)
 ); 
 
+create table if not exists sg_likes (
+    id serial primary key, 
+    post_id int references sg_posts (id), 
+    user_id text not null, 
+    author_name text not null, 
+    author_image text not null
+)
+
 --TODO add likes and followers
 
 -- JOIN EXAMPLE

@@ -3,6 +3,7 @@ const massive = require('massive');
 const express = require('express');
 const bodyPaser = require('body-parser');
 const session = require('express-session');
+const cloudinary = require('cloudinary'); 
 
 //Controllers
 const authController = require('./controllers/authController'); 
@@ -12,6 +13,8 @@ const postController = require('./controllers/postController');
 
 require('dotenv').config();
 massive(process.env.CONNECTION_STRING).then(db => app.set('db', db));
+
+// --- When DB is ready for initialization do db.init here ---
 
 const app = express();
 app.use(bodyPaser.json());
@@ -42,7 +45,22 @@ app.get('/api/posts', postController.getAllPosts);
 app.post('/api/posts', postController.createPost); 
 app.delete('/api/posts/:authorId/:id', postController.deletePost); 
 
-//Posts
+//Cloudinary
+app.get('/api/upload', (req, res) => {
+  // get a timestamp in seconds which is UNIX format
+      const timestamp = Math.round((new Date()).getTime() / 1000);
+  // cloudinary API secret stored in the .env file
+      const api_secret  = process.env.CLOUDINARY_API_SECRET;
+  // user built in cloudinary api sign request function to  create hashed signature with your api secret and UNIX timestamp
+      const signature = cloudinary.utils.api_sign_request({ timestamp: timestamp }, api_secret);
+  // make a signature object to send to your react app
+      const payload = {
+          signature: signature,
+          timestamp: timestamp
+      };
+          res.json(payload);
+})
+
 function checkLoggedIn(req, res, next) {
   if (req.session.user) {
     next();

@@ -1,23 +1,12 @@
-/* <div className="post_container">
-                <div className="post_top_div">
-                    <img src={authorImage} alt=""/>
-                    <p>{authorName}</p>
-                </div>
-                <div className="main_post_image">
-                    <img src={postMedia} alt=""/>
-                </div>
-                <div className="post_bottom_div">
-                    <p>{title}</p>
-                </div>
-            </div> */
-
-.post_container {
-    width: 100%; 
-    height: 60%;
-    display: flex; 
-    flex-direction: column; 
+.post_container {  
+    width: 80%; 
+    height: 100%;
+    /* display: flex;  */
+    /* flex-direction: column;  */
     background: darkblue; 
-    overflow: scroll; 
+    margin: auto; 
+    margin-top: 10px; 
+    border-radius: 10px;  
 }
 
 .post_top_div {
@@ -42,21 +31,25 @@
     border-radius: 40px;  
 }
 
-.main_post_image {
-    height: 50%; 
-    width: 50%; 
+.main_post_image > img {
+    max-height: 25%; 
+    max-width: 50%; 
     background: rgb(2, 2, 31); 
     border-radius: 10px; 
     margin-left: 25%; 
+    margin-top: 0px; 
+    margin-bottom: 0px; 
 }
 
 .post_bottom_div {
     background: rgb(5, 5, 36); 
+    margin-top: 0px; 
+    margin-bottom: 0px; 
 }
 
 .post_bottom_div > p {
     color: white; 
     text-align: center; 
     font-family: 'Courier New', Courier, monospace; 
-    font-size: 24px; 
+    font-size: 24px;   
 }
