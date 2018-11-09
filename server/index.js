@@ -29,6 +29,11 @@ app.use(express.static(`${__dirname}/../build`));
 //Networking
 app.get('/api/users', friendsController.getAllUsers); 
 
+//Friends 
+app.get('/api/followers/:id', friendsController.getFollowers)
+app.get('/api/following/:id', friendsController.getFriends)
+app.post('/api/follow/:currentUserId/:toFollowId', friendsController.followUnfollowUser)
+
 //Auth
 app.get('/auth/callback', authController.handleCallback); 
 app.get('/api/profile', authController.getProfile); //user data
