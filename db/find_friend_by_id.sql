@@ -1,0 +1,1 @@
+select * from sg_following where follower_id = $1 and tofollow_id = $2 limit 1; 

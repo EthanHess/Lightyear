@@ -12,6 +12,7 @@ class Friends extends Component {
         super()
         this.state = {
             friends: [],
+            followers: [], //TODO add other display tab for this
             allUsers: [], 
             user: null, 
             allUserMode: false
@@ -24,22 +25,30 @@ class Friends extends Component {
     }
 
     componentDidMount() {
+        this.refreshData();
+    }
+
+    refreshData = () => {
         this.getAllUsers(); 
+        this.getMyFriends(); 
+        //this.getMyFollowers(); 
     }
 
     followUnfollow = (id) => {
-        console.log('id', id)
-        if (this.state.user.user.user_id === id) {
+        console.log('id + user', id, this.props.user.user)
+        const myUID = this.props.user.user.user_id
+        if (id === myUID) {
             alert('YO, This is you')
             return; 
         }
-
-        //Check to see if they're already following here
-        if (this.state.allUserMode === true) {
-            
-        } else {
-
-        }
+        const url = `/api/follow/${myUID}/${id}`
+        console.log('follow url', url)
+        axios.post(url).then(response => {
+            console.log('response data from follow unfollow', response.data)
+            this.refreshData(); 
+        }).catch(error => {
+            console.log('error sending follow request', error)
+        })
     }
 
     getAllUsers = () => {
@@ -49,9 +58,33 @@ class Friends extends Component {
         })
     }
 
+    getMyFriends = () => {
+        if (this.props.user === null || this.props.user === undefined) { return }
+        const myUID = this.props.user.user.user_id
+        axios.get(`/api/following/${myUID}`).then(response => {
+            const friendArray = []
+            response.data.map(friend => friendArray.push(friend.tofollow_id))
+            console.log('friends and response', friendArray, response.data)
+            this.setState({ friends: friendArray })
+        }).catch(error => {
+            console.log('error getting who I follow', error)
+        })
+    }
+
+    getMyFollowers = () => {
+        if (this.props.user === null || this.props.user === undefined) { return }
+        const myUID = this.props.user.user.user_id
+        axios.get(`/api/followers/${myUID}`).then(response => {
+            this.setState({ followers: response.data })
+        }).catch(error => {
+            console.log('error getting followers', error)
+        })
+    }
+
     render() {
         const allUsersMapped = this.state.allUsers.map(user => {
-            const amFollowing = this.state.friends.includes(user) === true ? "Following" : "Follow"
+            console.log('user + friend array', user, this.state.friends)
+            const amFollowing = this.state.friends.includes(user.user_id) === true ? "Following" : "Follow"
             //TODO check if current user
             return <div className="user_container">
                 <img src={user.profile_picture} alt=""/>

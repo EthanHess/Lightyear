@@ -28,10 +28,13 @@ create table if not exists sg_archives (
     main_url text not null
 ); 
 
+-- follower_id text not null references sg_users (user_id), 
+-- following_id text not null references sg_users (user_id)
+
 create table if not exists sg_following (
     id serial primary key,
-    follower_id text not null references sg_users (id), 
-    following_id text not null references sg_users (id)
+    follower_id text not null, 
+    toFollow_id text not null
 ); 
 
 create table if not exists sg_likes (

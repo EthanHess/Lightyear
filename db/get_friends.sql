@@ -1,0 +1,1 @@
+select * from sg_following where follower_id = $1; 
