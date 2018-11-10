@@ -11,11 +11,14 @@ export default class SpaceStation extends Component {
         }
     }
 
+    //TODO use drop zone and display chosen image!
     render() {
-        const { monitorFn, newPostFn, chosenPic} = this.props; 
-        const pic = chosenPic ? <img src={chosenPic} alt="" /> : placeholder
+        const { monitorFn, newPostFn, chosenPic, toggleFn } = this.props; 
+        const pic = chosenPic ? <img src={chosenPic} alt="" /> : <img src={placeholder} alt=""/>
+        console.log('pic', pic)
         return (
             <div className="image_upload_container">
+                    <button onClick={toggleFn}>Toggle</button>
                     <ImageUploader
                         className="image_uploader"
                         withIcon={true}
@@ -24,7 +27,7 @@ export default class SpaceStation extends Component {
                         imgExtension={['.jpg', '.gif', '.png', '.gif']}
                         maxFileSize={5242880}
                     />
-                    <img src={pic} alt=""/>
+                    {chosenPic}
                     <input onChange={ (e) => monitorFn(e.target.value)}></input>
                     <button onClick={newPostFn}>Post</button>
             </div>

@@ -9,6 +9,7 @@ import axios from 'axios';
 import { connect } from 'react-redux'; 
 import { loginUser } from '..//../ducks/reducer'; 
 import { logoutUser } from '..//../ducks/reducer'; 
+import { updateFollowing } from '..//../ducks/reducer'; 
 
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dmqhrqwc2/image/upload';
 // const CLOUDINARY_FETCH_UPLOAD_URL = 'https://res.cloudinary.com/dmqhrqwc2'
@@ -19,7 +20,8 @@ class Feed extends Component {
         this.state = {
             uploadedFileCloudinaryUrl: '', 
             user: null, 
-            chosenPic: '', 
+            following: [], //TODO will need to set following in reducer
+            chosenPic: null, 
             posts: [], 
             postCaption: '',
             mineOnly: false, //show only my posts, can edit/delete
@@ -29,6 +31,7 @@ class Feed extends Component {
     //When they choose an image
     onDrop = (picture) => {
         console.log('chosen pic', picture[0].name) //picture is array, rename? 
+        this.setState({chosenPic: picture[0]})
         this.handleImageUpload(picture)
     }
 
@@ -41,22 +44,33 @@ class Feed extends Component {
     }
 
     fetchFeed = () => {
+        this.fetchFriendsPosts()
+    }
+
+    //make sure following isn't undefined or null
+    fetchFriendsPosts = () => {
+        if (this.props.user === null || this.props.user === undefined) { return }
         if (this.state.mineOnly === false) {
-            const urlToFetchAll = "/api/posts"
-            axios.get(urlToFetchAll).then(response => {
-                this.setState({posts: response.data })
+            this.props.following.push(this.props.user.user.user_id)
+            const reqBody = {
+                array: this.props.following
+            }
+            const urlToFetchFeed = '/api/posts/friends';
+            axios.post(urlToFetchFeed, reqBody).then(response => {
+                this.setState({ posts: response.data })
             }).catch(error => {
-                console.log('error fetching all', error)
+                console.log('error fetching feed', error)
             })
         } else {
-            const urlToFetchMine = ""
+            const urlToFetchMine = `/api/posts/me/${this.props.user.user.user_id}`
             axios.get(urlToFetchMine).then(response => {
-
+                this.setState({ posts: response.data })
             }).catch(error => {
                 console.log('error fetching mine', error)
             })
         }  
     }
+
 
     handleImageUpload = (files) => {
         axios.get('/api/upload').then(response => {
@@ -117,11 +131,11 @@ class Feed extends Component {
         const arrayToMap = this.state.posts.reverse()
         const postsMapped = arrayToMap.map(post => {
             return <PostContainer id={post.id} 
-            authorImage={post.author_image}
-            postMedia={post.post_media}
-            authorName={post.author_name}
-            title={post.title}
-            authorId={post.author_id}
+                authorImage={post.author_image}
+                postMedia={post.post_media}
+                authorName={post.author_name}
+                title={post.title}
+                authorId={post.author_id}
             /> 
         })
 
@@ -130,6 +144,7 @@ class Feed extends Component {
             monitorFn={this.monitorTextChange} 
             newPostFn={this.newPost} 
             chosenPic={this.state.uploadedFileCloudinaryUrl}
+            toggleFn={this.toggleDisplayHeader}
             /> 
         : <ToggleHeader toggleFn={this.toggleDisplayHeader}/>
 
@@ -148,8 +163,9 @@ class Feed extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.user
+        user: state.user, 
+        following: state.following
     }
 }
 
-export default connect(mapStateToProps, { loginUser, logoutUser })(Feed); 
+export default connect(mapStateToProps, { loginUser, logoutUser, updateFollowing })(Feed); 

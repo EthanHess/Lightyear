@@ -49,6 +49,8 @@ app.delete('/api/archives/:author_id/:id', archiveController.deleteArchive);
 app.get('/api/posts', postController.getAllPosts); 
 app.post('/api/posts', postController.createPost); 
 app.delete('/api/posts/:authorId/:id', postController.deletePost); 
+app.post('/api/posts/friends/', postController.getFriendsPosts); //post so we can pass array of ids in body
+app.get('/api/posts/me/:id', postController.getPostsForUser);
 
 //Cloudinary
 app.get('/api/upload', (req, res) => {
@@ -77,7 +79,7 @@ function checkLoggedIn(req, res, next) {
 //Listen
 const SERVER_PORT = process.env.SERVER_PORT;
 app.listen(SERVER_PORT, () => {
-  console.log('Server listening on port ' + SERVER_PORT);
+  console.log('Backend of Spacegram listening on port ' + SERVER_PORT);
 });
 
 //Zeit specific

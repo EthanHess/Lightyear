@@ -1,6 +1,8 @@
--- select * from 
+select * from sg_posts where user_id in ($1:csv); 
 
 -- reference 
+
+-- will want to do this eventually via reference to scale big
 
 -- SELECT postid
 -- FROM Post

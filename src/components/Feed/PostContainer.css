@@ -31,9 +31,17 @@
     border-radius: 40px;  
 }
 
+.main_post_image {
+    height: 80%; 
+    width: 80%; 
+    display: flex; 
+    justify-content: center; 
+    /* margin: auto;  */
+}
+
 .main_post_image > img {
-    max-height: 25%; 
-    max-width: 50%; 
+    max-height: 100%; 
+    max-width: 100%; 
     background: rgb(2, 2, 31); 
     border-radius: 10px; 
     margin-left: 25%; 

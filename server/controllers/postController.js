@@ -21,13 +21,23 @@ module.exports = {
             console.log('post fetching error', error)
         })
     }, 
-    getFriendsPosts:(req, rex, next) => {
-
+    getFriendsPosts:(req, res, next) => {
+        const dbInstance = req.app.get('db'); 
+        const { array } = req.body; 
+        console.log('get friends post enpoint hit', array, req.body)
+        dbInstance.get_friends_posts([array])
+        .then(posts => {
+            console.log('the posts from my friends', posts)
+            res.status(200).send(posts)
+        }).catch(error => {
+           res.status(500).send({errorMessage: "Oops! Something went wrong. Our engineers have been informed!"});
+           console.log('get friends post error catch handler', error)
+        })
     }, 
     getPostsForUser:(req, rex, next) => {
-        const dbInstance = req.qpp.get('db'); 
-        const { userId } = req.body; 
-        dbInstance.get_posts_for_user(userId)
+        const dbInstance = req.app.get('db'); 
+        const { params } = req; 
+        dbInstance.get_posts_for_user(params.id)
         .then(posts => res.status(200).send(posts))
         .catch(error => {
            res.status(500).send({errorMessage: "Oops! Something went wrong. Our engineers have been informed!"});
