@@ -40,9 +40,11 @@
 }
 .main_feed {
     width: 100%; 
-    height: 60%;
-    background: rgb(1, 1, 10); 
+    height: 100%;
+    background: rgb(0, 0, 0); 
     overflow: scroll;
+    margin-top: 0px; 
+    margin-bottom: 0px; 
 }
 .toggle_container {
     display: flex; 
@@ -51,6 +53,7 @@
     height: 100px;
     width: 100%;
     margin-top: 0px; 
+    margin-bottom: 0px; 
 }
 .toggle_header {
     display: flex; 

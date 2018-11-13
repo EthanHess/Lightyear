@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './PostContainer.css'; 
 import like from './like.png'; 
 import liked from './liked.png'; 
-
+import comments from './comments.png'; 
+import axios from 'axios'; 
 
 export default class PostContainer extends Component {
     constructor(props) {
@@ -16,13 +17,27 @@ export default class PostContainer extends Component {
         //Pop alert 
     }
 
+    likeHandler = (id) => {
+
+    }
+
+    commentHandler = (id) => {
+
+    }
+
+    fetchLikeCount = () => {
+
+    }
+
     //TODO add edit/delete button for own post (pass fns via props)
     render() {
         const { user, deleteFn, editFn } = this.props; 
         const { id, authorImage, postMedia, authorName, title, authorId } = this.props; 
         //const isCurrent = user.user.user_id === authorId; //can delete own posts
         const isCurrent = false; 
-        const likedPost = false //get from props for heart pic
+        const likedPost = false; //get from props for heart pic
+        const likeCount = 0; 
+        const commentCount = 0; 
         
         return (
             <div className="post_container">
@@ -38,7 +53,10 @@ export default class PostContainer extends Component {
                 </div>
                 {/* Set delete/edit hidden if not current?  */}
                 <div className="footer_div"> 
-                    <img src={likedPost ? liked : like}></img>
+                    <img onClick={() => {this.likeHandler(id)}} src={likedPost ? liked : like}/>
+                    <p>{likeCount}</p>
+                    <img onClick={() => {this.commentTapped(id)}} src={comments}/>
+                    <p>{commentCount}</p>
                     <button onClick={ isCurrent ? () => editFn(id) : this.nothing }>{isCurrent ? "Edit" : ""}</button>
                     <button onClick={ isCurrent ? () => deleteFn(id) : this.nothing }>{isCurrent ? "Delete" : ""}</button>
                 </div>

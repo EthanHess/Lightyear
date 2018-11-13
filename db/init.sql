@@ -37,15 +37,26 @@ create table if not exists sg_following (
     toFollow_id text not null
 ); 
 
+-- todo, when scales we also want to store like count (we'll store like object to get likers pics etc.)
+
 create table if not exists sg_likes (
     id serial primary key, 
-    post_id int references sg_posts (id), 
+    post_id int not null, -- references sg_posts (id), 
+    user_id text not null, 
+    liker_name text not null, 
+    liker_image text not null
+);
+
+-- alter table to add media? 
+create table if not exists sg_comments (
+    id serial primary key, 
+    post_id int not null, --eventually add reference (alter table)
     user_id text not null, 
     author_name text not null, 
-    author_image text not null
-)
-
---TODO add likes and followers
+    author_image text not null, 
+    comment_text text not null, 
+    comment_date text not null --date string
+);
 
 -- JOIN EXAMPLE
 -- SELECT helo_posts.author_id, helo_users.auth0_id, helo_posts.title, helo_users.profile_picture

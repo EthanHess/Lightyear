@@ -10,6 +10,8 @@ const authController = require('./controllers/authController');
 const friendsController = require('./controllers/friendsController'); 
 const archiveController = require('./controllers/archiveController'); 
 const postController = require('./controllers/postController'); 
+const likeController = require('./controllers/likeController'); 
+const commentController = require('./controllers/commentController'); 
 
 require('dotenv').config();
 massive(process.env.CONNECTION_STRING).then(db => app.set('db', db));
@@ -51,6 +53,18 @@ app.post('/api/posts', postController.createPost);
 app.delete('/api/posts/:authorId/:id', postController.deletePost); 
 app.post('/api/posts/friends/', postController.getFriendsPosts); //post so we can pass array of ids in body
 app.get('/api/posts/me/:id', postController.getPostsForUser);
+
+//Likes
+app.get('/api/likes/:postid', likeController.getLikesForPost); 
+app.post('/api/likes/:postid/:likerid', likeController.likeHandler); 
+
+//Comments
+app.get('/api/comments/:postid', commentController.getCommentsForPost); 
+app.post('/api/comments', commentController.commentHandler); 
+app.delete('/api/comments/:commentid', commentController.deleteComment); 
+//TODO have update as well
+
+//Todo, add likes/share for comments
 
 //Cloudinary
 app.get('/api/upload', (req, res) => {
