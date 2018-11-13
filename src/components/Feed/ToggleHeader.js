@@ -14,8 +14,8 @@ export default class ToggleHeader extends Component {
     render() {
         const { toggleFn } = this.props; 
         return (
-            <div className="toggle header">
-                <button onClick={toggleFn}></button>
+            <div className="toggle_header">
+                <button onClick={toggleFn}>Post</button>
             </div>
         )
     }

@@ -1,7 +1,8 @@
 .header_class {
   width: 100%; 
   height: 100px; 
-  background-image: url("Lightyear-navbar-background.png"); 
+  /* background-image: url("Lightyear-navbar-background.png");  */
+  background-color: black; 
   border-style: solid; 
   border-width: 0px 0px 2px 0px; 
   border-color: rgb(25, 25, 160); 
@@ -16,12 +17,13 @@
   margin: auto; 
 }
 
-.right_nav_utils > img {
+.right_nav_utils > img { 
   width: 80px; 
   height: 80px;
   margin: auto; 
   border-radius: 40px; 
   margin-left: 30%; 
+  box-shadow: rgb(102, 250, 230); 
 }
 
 .right_nav_utils > p {
@@ -43,13 +45,27 @@
 }
 
 .header_container {
+  width: 100%; 
   display: flex; 
   flex-direction: row; 
 }
 
 .spacegram_logo {
-  width: 400px; 
-  height: 100px; 
+  /* width: 400px;  */
+  width: 100%; 
+  height: 80px; 
+  color: rgb(134, 161, 219); 
+  display: flex; 
+  flex-direction: row; 
+}
+
+.spacegram_logo > p {
+  color: rgb(130, 202, 235); 
+  font-family: 'Courier New', Courier, monospace; 
+  font-size: 48px; 
+  font-weight: bold; 
+  margin: auto; 
+  margin-left: 110px; 
 }
 
 .right_nav_utils {
@@ -58,8 +74,10 @@
 }
 
 .logo {
-  min-width: 400px; 
-  min-height: 100px;
+  max-width: 100%; 
+  max-height: 80px;
+  padding-top: 10px; 
+  padding-left: 10px; 
 }
 
 .main_body {
@@ -219,6 +237,61 @@
     50%  {color:rgb(16, 16, 197); width: 50%; font-size: 18px;}
     75%  {color:rgb(16, 80, 139); width: 75%; font-size: 24px;}
     100% {color:rgb(55, 67, 173); width: 100%; font-size: 48px;}
+}
+
+/* Media queries */
+
+@media screen and (max-width: 700px) {
+  .news_img, .friends_img, .ss_img {
+    min-width: 50px; 
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px; 
+    margin: auto; 
+  }
+  .news_bubble, .friends_bubble, .space_station_bubble {
+    width: 25%; 
+    height: 25%; 
+    background: transparent; 
+    border-width: 2px; 
+    border-style: solid; 
+    border-radius: 20px; 
+    display: flex; 
+    justify-content: space-evenly; 
+    flex-direction: column; 
+    box-shadow: 5px 5px 5px 5px rgb(127, 189, 214);
+  }
+  .main_button_tab {
+    background: transparent; 
+    font-size: 12px; 
+  }
+  .spacegram_logo > p {
+    color: rgb(130, 202, 235); 
+    font-family: 'Courier New', Courier, monospace; 
+    font-size: 24px; 
+    font-weight: bold; 
+    margin: auto; 
+    margin-left: 60px; 
+  }
+  .logo {
+    max-width: 50px; 
+    max-height: 50px;
+    padding-top: 10px; 
+    padding-left: 10px; 
+  }
+  .text_intro {
+    width: 100%; 
+    height: 100px;
+    background: transparent; 
+    color: rgb(176, 186, 230); 
+    font-size: 24px; 
+    text-align: center; 
+    font-family: 'Courier New', Courier, monospace; 
+    font-weight: bold; 
+    animation-name: intro_animation;
+    animation-duration: 0.5s;
+    animation-delay: 0s;
+  }
 }
 
 

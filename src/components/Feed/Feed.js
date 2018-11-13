@@ -50,6 +50,7 @@ class Feed extends Component {
     //make sure following isn't undefined or null
     fetchFriendsPosts = () => {
         if (this.props.user === null || this.props.user === undefined) { return }
+        if (this.props.user.user === null || this.props.user.user === undefined) { return }
         if (this.state.mineOnly === false) {
             this.props.following.push(this.props.user.user.user_id)
             const reqBody = {
@@ -148,9 +149,11 @@ class Feed extends Component {
             /> 
         : <ToggleHeader toggleFn={this.toggleDisplayHeader}/>
 
+        const className = this.state.displayHeader === true ? "upload_header" : "toggle_container"
+
         return (
             <div className="feed_parent">
-                <div className="upload_header">
+                <div className={className}>
                     {headerCompToDisplay}
                 </div>
                 <div className="main_feed">

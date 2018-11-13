@@ -3,7 +3,7 @@ import './Feed.css'; //TODO have separate?
 import ImageUploader from 'react-images-upload';
 import placeholder from './pic-placeholder.png'; 
 
-export default class SpaceStation extends Component {
+export default class UploadContainer extends Component {
     constructor(props) {
         super(props)
         this.state = {

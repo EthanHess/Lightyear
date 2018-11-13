@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'; 
-import logo from './Spacegram-logo-one.png'; 
+import logo from './mainIcon.png'; 
 import { connect } from 'react-redux';
 import { loginUser } from './ducks/reducer'; 
 import { logoutUser } from './ducks/reducer'; 
@@ -32,6 +32,12 @@ class App extends Component {
       this.props.logoutUser(); 
       this.setState({ user: null });
     });
+  }
+
+  //TODO will want to set following here and pass to redux since we have two components where they are needed
+
+  login = () => {
+    this.props.history.push('/auth')
   }
 
   //Listen for scrolling
@@ -87,11 +93,11 @@ class App extends Component {
           <div className="header_container">
             <div className ="spacegram_logo">
                 <img className="logo" src={logo} alt=""/>
+                <p>Spacegram</p>
             </div>
             <div className ="right_nav_utils">
               <img src={prfPic} alt=""/> 
-              <p>{exists ? this.state.username : "Login"}</p>
-              <button onClick={this.logout}>Logout</button>
+              <button onClick={exists ? this.logout : this.login}>{exists ? this.state.username : "Login"}</button>
             </div>
          </div>
         </header>
