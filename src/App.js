@@ -92,7 +92,7 @@ class App extends Component {
         <header className="header_class">
           <div className="header_container">
             <div className ="spacegram_logo">
-                <img className="logo" src={logo} alt=""/>
+                <img className="logo" src={logo} onClick={() => this.props.history.push('/')} alt=""/>
                 <p>Spacegram</p>
             </div>
             <div className ="right_nav_utils">

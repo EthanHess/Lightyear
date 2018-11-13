@@ -43,6 +43,7 @@
 }
 .post_bottom_div {
     background: rgb(5, 5, 36); 
+    height: 50px;
     margin-top: 0px; 
     margin-bottom: 0px; 
 }
@@ -51,7 +52,26 @@
     text-align: center; 
     font-family: 'Courier New', Courier, monospace; 
     font-size: 24px;   
+    padding-top: 5px;
+    height: 40px;
 }
 .footer_div {
     height: 50px;
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-evenly; 
+    /* margin: auto;  */
+    background: rgb(8, 1, 66); 
+}
+.footer_div > img {
+    max-height: 40px; 
+    max-width: 40px;
+    margin: auto; 
+    margin-left: 5px; 
+}
+.footer_div > button {
+    width: 20%; 
+    height: 40px; 
+    margin-top: 5px; 
+    border-radius: 5px; 
 }

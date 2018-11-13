@@ -48,7 +48,7 @@ module.exports = {
     getPostById: (req, res, next) => {
 
     }, 
-    updateArchive: (req, res, next) => {
+    updatePost: (req, res, next) => {
 
     }
 }

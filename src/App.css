@@ -82,7 +82,8 @@
 
 .main_body {
   padding-top: 0px; 
-  background: black; 
+  /* background: black;  */
+  background: transparent; 
   height: 100vh; 
   width: 100vw; 
   display: flex; 
@@ -92,6 +93,10 @@
 .home_parent {
   padding-top: 0px; 
   background: black; 
+  background-image: url("josh_galaxy.jpg"); 
+  background-size: cover;                     
+  background-repeat: no-repeat;
+  background-position: center center;  
   height: 200vh; 
   width: 100vw; 
   display: flex; 
@@ -111,6 +116,7 @@
   display: flex; 
   flex-direction: column; 
   justify-content: space-evenly; 
+  background: transparent; 
 }
 
 .text_intro {
@@ -141,7 +147,8 @@
 .news_bubble, .friends_bubble, .space_station_bubble {
   width: 25%; 
   height: 75%; 
-  background: transparent; 
+  /* background: transparent;  */
+  background: black; 
   border-width: 2px; 
   border-style: solid; 
   border-radius: 20px; 
@@ -172,7 +179,8 @@
 }
 
 .main_button_tab {
-  background: transparent; 
+  /* background: transparent;  */
+  background: black; 
   color: white; 
   border-color: rgb(69, 69, 190); 
   border-width: 1px; 
