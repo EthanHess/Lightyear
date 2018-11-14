@@ -9,7 +9,6 @@ export default class PostContainer extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            // user: null
             likes: [],
             comments: [], 
             likerArray: []
@@ -42,6 +41,7 @@ export default class PostContainer extends Component {
 
     fetchLikeCount = () => {
         axios.get(`api/likes/${this.props.id}`).then(response => {
+            console.log('likes front end', response.data)
             this.setState({ likes: response.data })
         }).catch(error => { 
             console.log('error fetching likes for post front end', error)
@@ -56,12 +56,18 @@ export default class PostContainer extends Component {
         const isCurrent = user.user.user_id === authorId; //can delete own posts
         const likeCount = this.state.likes.length; 
         const commentCount = this.state.comments.length;
-        
-        const likedPost = this.state.likes.filter(like => {
-            return like.user_id === user.user.user_id
-        })
-        console.log('liked post', likedPost)
-        
+        const { likes } = this.state; 
+    
+        //For MVP, not scalable. Use SQL join :)
+        let likedPost = false; 
+
+        for (var i = 0; i < likes.length; i++) {
+            const like = likes[i]; 
+            if (like.post_id === id) {
+                likedPost = true; 
+            }
+        }
+
         return (
             <div className="post_container">
                 <div className="post_top_div">

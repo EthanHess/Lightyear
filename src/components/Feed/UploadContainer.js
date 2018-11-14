@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import './Feed.css'; //TODO have separate?
-import ImageUploader from 'react-images-upload';
+import Dropzone from 'react-dropzone';
 import placeholder from './pic-placeholder.png'; 
 
 export default class UploadContainer extends Component {
@@ -13,21 +13,20 @@ export default class UploadContainer extends Component {
 
     //TODO use drop zone and display chosen image!
     render() {
-        const { monitorFn, newPostFn, chosenPic, toggleFn } = this.props; 
-        const pic = chosenPic ? <img src={chosenPic} alt="" /> : <img src={placeholder} alt=""/>
-        console.log('pic', pic)
+        const { monitorFn, newPostFn, toggleFn, handleOnDropFn, chosenPic } = this.props; 
+        const pic = chosenPic != '' ? chosenPic : placeholder
         return (
             <div className="image_upload_container">
                     <button onClick={toggleFn}>Toggle</button>
-                    <ImageUploader
-                        className="image_uploader"
-                        withIcon={true}
-                        buttonText='Choose images'
-                        onChange={this.onDrop}
-                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                        maxFileSize={5242880}
-                    />
-                    {chosenPic}
+                    <Dropzone 
+                            multiple={false}
+                            accept="image/*"
+                            onDrop={handleOnDropFn}
+                            className='dropzone'
+                            >
+                    Tap here to upload an image!
+                    </Dropzone>
+                    <img src={pic} alt=""/> 
                     <input onChange={ (e) => monitorFn(e.target.value)}></input>
                     <button onClick={newPostFn}>Post</button>
             </div>

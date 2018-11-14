@@ -2,7 +2,7 @@ module.exports = {
     getLikesForPost: (req, res, next) => {
         const dbInstance = req.app.get('db'); 
         const postid = req.params.postid; 
-        dbInstance.getLikesForPost(postid).
+        dbInstance.get_likes_for_post(postid).
         then(likes => {
             if (likes) {
                 console.log('likes for post', likes)

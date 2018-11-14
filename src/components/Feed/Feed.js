@@ -12,27 +12,21 @@ import { logoutUser } from '..//../ducks/reducer';
 import { updateFollowing } from '..//../ducks/reducer'; 
 
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dmqhrqwc2/image/upload';
-// const CLOUDINARY_FETCH_UPLOAD_URL = 'https://res.cloudinary.com/dmqhrqwc2'
 
 class Feed extends Component {
     constructor() {
         super()
         this.state = {
             uploadedFileCloudinaryUrl: '', 
+            files: null,
             user: null, 
             following: [], //TODO will need to set following in reducer
-            chosenPic: null, 
+            chosenPic: '', 
             posts: [], 
             postCaption: '',
             mineOnly: false, //show only my posts, can edit/delete
             displayHeader: true //shows upload div
         }
-    }
-    //When they choose an image
-    onDrop = (picture) => {
-        console.log('chosen pic', picture[0].name) //picture is array, rename? 
-        this.setState({chosenPic: picture[0]})
-        this.handleImageUpload(picture)
     }
 
     componentDidMount() {
@@ -47,7 +41,8 @@ class Feed extends Component {
         this.fetchFriendsPosts()
     }
 
-    //make sure following isn't undefined or null
+    //make sure following is passed to redux before this view is loaded
+
     fetchFriendsPosts = () => {
         if (this.props.user === null || this.props.user === undefined) { return }
         if (this.props.user.user === null || this.props.user.user === undefined) { return }
@@ -58,14 +53,17 @@ class Feed extends Component {
             }
             const urlToFetchFeed = '/api/posts/friends';
             axios.post(urlToFetchFeed, reqBody).then(response => {
-                this.setState({ posts: response.data })
+                console.log('rd', response.data)
+                const array = Array.from(response.data)
+                this.setState({ posts: array.reverse() })
             }).catch(error => {
                 console.log('error fetching feed', error)
             })
         } else {
             const urlToFetchMine = `/api/posts/me/${this.props.user.user.user_id}`
             axios.get(urlToFetchMine).then(response => {
-                this.setState({ posts: response.data })
+                const array = Array.from(response.data)
+                this.setState({ posts: array.reverse() })
             }).catch(error => {
                 console.log('error fetching mine', error)
             })
@@ -73,29 +71,47 @@ class Feed extends Component {
     }
 
 
-    handleImageUpload = (files) => {
+    handleImageUpload = () => {
+        if (this.props.user === undefined || this.props.user === null) { alert('Please sign in'); return }
         axios.get('/api/upload').then(response => {
         let formData = new FormData();
         formData.append("signature", response.data.signature)
         formData.append("api_key", "288326384771891")
         formData.append("timestamp", response.data.timestamp)
-        formData.append("file", files[0]);
+        formData.append("file", this.state.files[0]);
         return axios.post(CLOUDINARY_UPLOAD_URL, formData).then(response => {
             console.log('upload cld response', response.data);
             this.setState({
                  uploadedFileCloudinaryUrl: response.data.secure_url, 
-            })
+            }, this.newPost())
         }).catch(error => { console.log('upload cld error', error) }) 
         })
     }     
+
+    handleOnDrop = (files) => {
+        this.setState({ files: files })
+        var reader  = new FileReader();
+        reader.addEventListener("load", function () {
+
+        }, false);
+        if (files[0]) {
+            reader.readAsDataURL(files[0]);
+        }
+        reader.onload = () => {
+            this.setChosenPic(reader.result)
+        }
+    }
+
+    setChosenPic = (b64) => {
+        this.setState({ chosenPic: b64 })
+    }
 
     monitorTextChange = (val) => {
         this.setState({ postCaption: val})
     }  
 
     newPost = () => {
-        console.log('this.props.user in feed', this.props.user)
-        if (this.props.user === undefined || this.props.user === null) { alert('Please sign in'); return }
+        console.log('this.state.ucurl', this.state.uploadedFileCloudinaryUrl )
         const { user } = this.props; 
         if (this.state.uploadedFileCloudinaryUrl === '') { alert('Please add media'); return }
         const newPost = {
@@ -110,27 +126,24 @@ class Feed extends Component {
             this.setState({
                 uploadedFileCloudinaryUrl: '',
                 postCaption: '', 
+                chosenPic: '',
                 displayHeader: false
-            })
-            this.fetchFeed()
+            }, this.fetchFeed())
         }).catch(error => {
-
             //Do this? 
             this.setState({
                 uploadedFileCloudinaryUrl: '',
                 postCaption: '', 
+                chosenPic: '',
                 displayHeader: false
             })
             console.log('error uploading new post', error)
         })
     }
 
-    //TODO expand and shrink upload box, shoulnd't show when they've posted
     render() {
 
-        //Map feed
-        const arrayToMap = this.state.posts.reverse() //don't do this in render? It may reverse them back and forth
-        const postsMapped = arrayToMap.map(post => {
+        const postsMapped = this.state.posts.map(post => {
             return <PostContainer id={post.id} 
                 authorImage={post.author_image}
                 postMedia={post.post_media}
@@ -144,9 +157,10 @@ class Feed extends Component {
         const headerCompToDisplay = this.state.displayHeader === true ? 
         <UploadContainer 
             monitorFn={this.monitorTextChange} 
-            newPostFn={this.newPost} 
-            chosenPic={this.state.uploadedFileCloudinaryUrl}
+            newPostFn={this.handleImageUpload} 
+            chosenPic={this.state.chosenPic}
             toggleFn={this.toggleDisplayHeader}
+            handleOnDropFn={this.handleOnDrop}
             /> 
         : <ToggleHeader toggleFn={this.toggleDisplayHeader}/>
 

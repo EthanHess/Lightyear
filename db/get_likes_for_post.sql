@@ -1,1 +1,1 @@
-select * from sg_likes where and post_id = $1; 
+select * from sg_likes where post_id = $1; 
