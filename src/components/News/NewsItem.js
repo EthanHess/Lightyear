@@ -1,4 +1,5 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom'; 
 import './News.css'; 
 
 export default class NewsItem extends Component {
@@ -10,12 +11,13 @@ export default class NewsItem extends Component {
     }
 
     render() {
-      const { createFn, title, image, index } = this.props; 
+      const { createFn, title, image, index, url } = this.props; 
       return (
         <div className="feed_cell">
              <p>{title}</p>
-             <img src={image} alt=""/>
-                 <div className="button_container_news">
+               {/* <img onClick={window.open(url)} src={image} alt=""/> */}
+               <a href={url} target={"_Blank"}><img src={image}/></a>
+               <div className="button_container_news">
                <button onClick={() => createFn(index)}>Archive</button>
                <button>Share</button>
              </div>

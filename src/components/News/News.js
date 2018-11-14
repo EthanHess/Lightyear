@@ -137,11 +137,13 @@ class News extends Component {
 
     render() {
         console.log('props', this.props)
+        console.log('news feed', this.state.mainNewsFeed)
         const mainFeedMapped = this.state.mainNewsFeed.map((newsItem, index) => {
             return <NewsItem createFn={this.archive} 
             title={newsItem.title}
             image={newsItem.urlToImage}
             id={newsItem.publishedAt}
+            url={newsItem.url}
             index={index}/> 
         })
 

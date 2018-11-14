@@ -25,7 +25,7 @@ class Feed extends Component {
             posts: [], 
             postCaption: '',
             mineOnly: false, //show only my posts, can edit/delete
-            displayHeader: true //shows upload div
+            displayHeader: false //shows upload div
         }
     }
 
