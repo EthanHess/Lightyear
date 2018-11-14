@@ -129,7 +129,7 @@ class Feed extends Component {
     render() {
 
         //Map feed
-        const arrayToMap = this.state.posts.reverse()
+        const arrayToMap = this.state.posts.reverse() //don't do this in render? It may reverse them back and forth
         const postsMapped = arrayToMap.map(post => {
             return <PostContainer id={post.id} 
                 authorImage={post.author_image}
@@ -137,6 +137,7 @@ class Feed extends Component {
                 authorName={post.author_name}
                 title={post.title}
                 authorId={post.author_id}
+                user={this.props.user}
             /> 
         })
 

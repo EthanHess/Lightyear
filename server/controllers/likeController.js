@@ -19,10 +19,12 @@ module.exports = {
     likeHandler: (req, res, next) => { //Query for like then add/remove accordingly. Like following
         const dbInstance = req.app.get('db'); 
         const { params } = req; 
+        const { likerImage, likerName } = req.body; 
+
         dbInstance.see_if_liked([params.postid, params.likerid])
         .then(likes => {
             if (likes.length) {
-                dbInstance.unlike_post([param.postid, params.likerid])
+                dbInstance.unlike_post([params.postid, params.likerid])
                 .then(response => {
                     res.status(200).send(response)
                 }).catch(error => {
@@ -30,7 +32,7 @@ module.exports = {
                     console.log('unlike error', error)
                 })
             } else {
-                dbInstance.like_post([param.postid, params.likerid])
+                dbInstance.like_post([params.postid, params.likerid, likerName, likerImage])
                 .then(response => {
                     res.status(200).send(response)
                 }).catch(error => {

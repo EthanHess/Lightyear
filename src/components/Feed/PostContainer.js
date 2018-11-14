@@ -10,6 +10,9 @@ export default class PostContainer extends Component {
         super(props)
         this.state = {
             // user: null
+            likes: [],
+            comments: [], 
+            likerArray: []
         }
     }
 
@@ -17,8 +20,20 @@ export default class PostContainer extends Component {
         //Pop alert 
     }
 
-    likeHandler = (id) => {
+    componentDidMount() {
+        this.fetchLikeCount()
+    }
 
+    likeHandler = (id) => {
+        const reqBody = {
+            likerImage: this.props.user.user.profile_picture, 
+            likerName: this.props.user.user.name
+        }
+        axios.post(`/api/likes/${id}/${this.props.user.user.user_id}`, reqBody).then(response => {
+            this.setState({ likes: response.data })
+        }).catch(error => {
+            console.log('error adding like for post front end', error)
+        })
     }
 
     commentHandler = (id) => {
@@ -26,18 +41,26 @@ export default class PostContainer extends Component {
     }
 
     fetchLikeCount = () => {
-
+        axios.get(`api/likes/${this.props.id}`).then(response => {
+            this.setState({ likes: response.data })
+        }).catch(error => { 
+            console.log('error fetching likes for post front end', error)
+        })
     }
 
     //TODO add edit/delete button for own post (pass fns via props)
     render() {
+
         const { user, deleteFn, editFn } = this.props; 
         const { id, authorImage, postMedia, authorName, title, authorId } = this.props; 
-        //const isCurrent = user.user.user_id === authorId; //can delete own posts
-        const isCurrent = false; 
-        const likedPost = false; //get from props for heart pic
-        const likeCount = 0; 
-        const commentCount = 0; 
+        const isCurrent = user.user.user_id === authorId; //can delete own posts
+        const likeCount = this.state.likes.length; 
+        const commentCount = this.state.comments.length;
+        
+        const likedPost = this.state.likes.filter(like => {
+            return like.user_id === user.user.user_id
+        })
+        console.log('liked post', likedPost)
         
         return (
             <div className="post_container">
@@ -53,12 +76,18 @@ export default class PostContainer extends Component {
                 </div>
                 {/* Set delete/edit hidden if not current?  */}
                 <div className="footer_div"> 
-                    <img onClick={() => {this.likeHandler(id)}} src={likedPost ? liked : like}/>
-                    <p>{likeCount}</p>
-                    <img onClick={() => {this.commentTapped(id)}} src={comments}/>
-                    <p>{commentCount}</p>
-                    <button onClick={ isCurrent ? () => editFn(id) : this.nothing }>{isCurrent ? "Edit" : ""}</button>
-                    <button onClick={ isCurrent ? () => deleteFn(id) : this.nothing }>{isCurrent ? "Delete" : ""}</button>
+                    <div className="likes_container">
+                        <img onClick={() => {this.likeHandler(id)}} src={likedPost ? liked : like}/>
+                        <p>{likeCount}</p>
+                    </div>
+                    <div className="comments_container">
+                        <img onClick={() => {this.commentTapped(id)}} src={comments}/>
+                        <p>{commentCount}</p>
+                    </div>
+                    <div className="button_container">
+                        <button onClick={ isCurrent ? () => editFn(id) : this.nothing }>{isCurrent ? "Edit" : ""}</button>
+                        <button onClick={ isCurrent ? () => deleteFn(id) : this.nothing }>{isCurrent ? "Delete" : ""}</button>
+                    </div>
                 </div>
             </div>
         )
