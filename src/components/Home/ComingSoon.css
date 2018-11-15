@@ -1,0 +1,92 @@
+.intro_container_cs {
+    width: 100vw; 
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-evenly; 
+    background: transparent; 
+  }
+  
+  .text_intro_cs {
+    width: 100%; 
+    height: 100px;
+    background: transparent; 
+    color: rgb(176, 186, 230); 
+    font-size: 48px; 
+    text-align: center; 
+    font-family: 'Courier New', Courier, monospace; 
+    font-weight: bold; 
+    animation-name: intro_animation;
+    animation-duration: 0.5s;
+    animation-delay: 0s;
+  }
+  
+  /* TODO add background image?  */
+  .intro_tabs_cs {
+    width: 80%; 
+    margin-left: 10%; 
+    margin-right: 10%; 
+    display: flex; 
+    justify-content: space-between; 
+    background: transparent;  
+    height: 50%; 
+  }
+  
+  .cart_bubble, .meetups_bubble, .credits_bubble, .constellations_bubble, .learn_bubble, .games_bubble {
+    width: 12.5%; 
+    height: 37.5%; 
+    /* background: transparent;  */
+    background: black; 
+    border-width: 2px; 
+    border-style: solid; 
+    border-radius: 20px; 
+    display: flex; 
+    justify-content: space-evenly; 
+    flex-direction: column; 
+    box-shadow: 3px 3px 3px 3px rgb(127, 189, 214);
+  }
+  
+  /* .news_bubble {
+    border-color: rgb(127, 189, 214); 
+  }
+  
+  .friends_bubble {
+    border-color: rgb(127, 189, 214); 
+  }
+  
+  .space_station_bubble {
+    border-color: rgb(127, 189, 214); 
+  } */
+  
+  .cart_img, .meetups_img, .credits_img, .const_img, learn_img, games_img {
+    max-width: 50px;
+    max-height: 50px; 
+    margin: auto; 
+  }
+  
+  .main_button_tab_cs {
+    /* background: transparent;  */
+    background: black; 
+    color: white; 
+    border-color: rgb(69, 69, 190); 
+    border-width: 1px; 
+    border-radius: 5px; 
+    margin-left: 15px; 
+    margin-bottom: 15px; 
+    margin-right: 15px; 
+    width: auto; 
+    font-size: 24px; 
+    font-family: 'Courier New', Courier, monospace; 
+    font-weight: bold; 
+    white-space: nowrap; 
+  }
+  
+  .main_button_tab_cs:hover {
+    background: rgb(49, 49, 238); 
+  }
+  
+.bottom_footer_cs {
+    height: 100px; 
+    width: 100%; 
+    color: black; 
+}

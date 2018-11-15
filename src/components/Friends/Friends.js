@@ -6,12 +6,13 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { loginUser } from '..//../ducks/reducer'; 
 import { logoutUser } from '..//../ducks/reducer'; 
+import { updateFollowing } from '..//../ducks/reducer'; 
 
 class Friends extends Component {
     constructor() {
         super()
         this.state = {
-            friends: [],
+            following: [],
             followers: [], //TODO add other display tab for this
             allUsers: [], 
             user: null, 
@@ -65,7 +66,7 @@ class Friends extends Component {
             const friendArray = []
             response.data.map(friend => friendArray.push(friend.tofollow_id))
             console.log('friends and response', friendArray, response.data)
-            this.setState({ friends: friendArray })
+            this.setState({ following: friendArray })
         }).catch(error => {
             console.log('error getting who I follow', error)
         })
@@ -83,8 +84,8 @@ class Friends extends Component {
 
     render() {
         const allUsersMapped = this.state.allUsers.map(user => {
-            console.log('user + friend array', user, this.state.friends)
-            const amFollowing = this.state.friends.includes(user.user_id) === true ? "Following" : "Follow"
+            console.log('user + friend array', user, this.state.following)
+            const amFollowing = this.state.following.includes(user.user_id) === true ? "Following" : "Follow"
             //TODO check if current user
             return <div className="user_container">
                 <img src={user.profile_picture} alt=""/>
@@ -114,10 +115,11 @@ class Friends extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.user
+        user: state.user,
+        following: state.following
     }
   }
   
-export default connect(mapStateToProps, { loginUser, logoutUser })(Friends);
+export default connect(mapStateToProps, { loginUser, logoutUser, updateFollowing })(Friends);
   
   

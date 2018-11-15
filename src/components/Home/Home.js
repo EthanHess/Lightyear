@@ -5,7 +5,8 @@ import news from './news.png';
 import friends from './friends.png'; 
 import spaceLock from './space_lock.png';
 
-import BottomHome from './BottomHome'
+import BottomHome from './BottomHome';
+import ComingSoon from './ComingSoon';
 
 export default class Home extends Component {
     constructor() {
@@ -45,6 +46,7 @@ export default class Home extends Component {
               </div>
              </div>
                 <BottomHome router={this.props}/>
+                {/* <ComingSoon router={this.props}/> */}
             </div>
         )
     }
