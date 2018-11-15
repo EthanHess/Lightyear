@@ -65,7 +65,7 @@ class Friends extends Component {
         axios.get(`/api/following/${myUID}`).then(response => {
             const friendArray = []
             response.data.map(friend => friendArray.push(friend.tofollow_id))
-            console.log('friends and response', friendArray, response.data)
+            this.props.updateFollowing(friendArray)
             this.setState({ following: friendArray })
         }).catch(error => {
             console.log('error getting who I follow', error)

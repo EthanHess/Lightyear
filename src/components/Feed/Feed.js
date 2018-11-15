@@ -47,13 +47,14 @@ class Feed extends Component {
         if (this.props.user === null || this.props.user === undefined) { return }
         if (this.props.user.user === null || this.props.user.user === undefined) { return }
         if (this.state.mineOnly === false) {
+            console.log('following in feed 1', this.props.following)
             this.props.following.push(this.props.user.user.user_id)
             const reqBody = {
                 array: this.props.following
             }
+            console.log('following in feed', this.props.following)
             const urlToFetchFeed = '/api/posts/friends';
             axios.post(urlToFetchFeed, reqBody).then(response => {
-                console.log('rd', response.data)
                 const array = Array.from(response.data)
                 this.setState({ posts: array.reverse() })
             }).catch(error => {

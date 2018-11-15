@@ -1,4 +1,4 @@
-insert into sg_following (post_id, user_id, author_name, author_image) 
+insert into sg_following (follower_id, tofollow_id) 
 values 
 ($1, $2) 
 returning *; 

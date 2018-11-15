@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-    user: null, //Should be username/picture? 
+    user: null, 
     following: []
 }
 
@@ -36,7 +36,7 @@ export function logoutUser() {
 }
 
 export function updateFollowing(following) {
-    console.log('following set from reducer')
+    console.log('following set from reducer', following)
     return {
         type: SET_FOLLOWING,
         payload: following //an array of ids of people I follow
