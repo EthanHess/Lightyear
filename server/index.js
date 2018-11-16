@@ -53,6 +53,7 @@ app.post('/api/posts', postController.createPost);
 app.delete('/api/posts/:authorId/:id', postController.deletePost); 
 app.post('/api/posts/friends/', postController.getFriendsPosts); //post so we can pass array of ids in body
 app.get('/api/posts/me/:id', postController.getPostsForUser);
+app.put('/api/posts/:authorId/:id', postController.updatePost); 
 
 //Likes
 app.get('/api/likes/:postid', likeController.getLikesForPost); 

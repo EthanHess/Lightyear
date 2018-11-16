@@ -87,6 +87,8 @@
     height: 40px; 
     margin-top: 5px; 
     border-radius: 5px; 
+    color: white; 
+    background: rgb(18, 3, 46); 
 }
 
 .footer_div {

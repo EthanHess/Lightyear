@@ -23,6 +23,12 @@ export default class PostContainer extends Component {
         this.fetchLikeCount()
     }
 
+    updatePostHandler = (updateText, postId) => {
+        axios.put(`/api/posts/${this.props.user.user.user_id}/${postId}`, { updateText }).then(response => {
+            this.setState({ archives: response.data }); 
+        }); 
+    }
+
     likeHandler = (id) => {
         const reqBody = {
             likerImage: this.props.user.user.profile_picture, 
@@ -91,6 +97,7 @@ export default class PostContainer extends Component {
                         <p>{commentCount}</p>
                     </div>
                     <div className="button_container">
+                        {/* Add input for update here */}
                         <button onClick={ isCurrent ? () => editFn(id) : this.nothing }>{isCurrent ? "Edit" : ""}</button>
                         <button onClick={ isCurrent ? () => deleteFn(id) : this.nothing }>{isCurrent ? "Delete" : ""}</button>
                     </div>

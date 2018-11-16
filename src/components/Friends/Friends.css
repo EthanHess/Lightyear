@@ -12,12 +12,24 @@
     display: flex; 
     flex-direction: column; 
     margin: auto; 
+    /* z-index: 10; */
 }
 
 .my_profile_container > img {
     max-width: 25%;
-    max-height: 25%; 
+    max-height: 25%;
+    border-radius: 10px; 
     margin: auto; 
+}
+
+.my_profile_container > p {
+    color: white; 
+    width: 50%; 
+    height: 50px;
+    text-align: center; 
+    font-family: 'Courier New', Courier, monospace; 
+    font-size: 36px; 
+    padding-left: 25%; 
 }
 
 .my_friends_container {
@@ -26,6 +38,7 @@
     box-shadow: lightblue;
     display: flex; 
     flex-direction: column; 
+    margin-right: 5%; 
 }
 
 .my_friends_container > button {
@@ -57,7 +70,7 @@
     display: flex; 
     flex-direction: row; 
     justify-content: space-evenly; 
-    background: darkblue; 
+    background: rgb(3, 3, 37); 
     margin-top: 5%; 
     border-radius: 10px; 
     box-shadow: white; 
@@ -65,7 +78,7 @@
 
 .user_container > p {
     color: aliceblue; 
-    background: darkblue; 
+    background: rgb(3, 3, 37); 
     height: 50px;
     width: 40%; 
     font-family: 'Courier New', Courier, monospace; 
@@ -78,7 +91,7 @@
     height: 50px;
     width: 50%; 
     color: white; 
-    background: darkblue; 
+    background: rgb(3, 3, 37); 
     font-family: 'Courier New', Courier, monospace; 
     font-size: 28px; 
     margin: auto; 
@@ -89,6 +102,7 @@
     max-height: 50%; 
     border-radius: 50%; 
     margin: auto; 
+    margin-left: 5%; 
 }
 
 .user_container > button:hover {

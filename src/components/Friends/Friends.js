@@ -61,6 +61,8 @@ class Friends extends Component {
 
     getMyFriends = () => {
         if (this.props.user === null || this.props.user === undefined) { return }
+        if (this.props.user.user === null || this.props.user.user === undefined) { return }
+        console.log('user in friends', this.props.user)
         const myUID = this.props.user.user.user_id
         axios.get(`/api/following/${myUID}`).then(response => {
             const friendArray = []
@@ -85,7 +87,10 @@ class Friends extends Component {
     render() {
         const allUsersMapped = this.state.allUsers.map(user => {
             console.log('user + friend array', user, this.state.following)
-            const amFollowing = this.state.following.includes(user.user_id) === true ? "Following" : "Follow"
+            let amFollowing = this.state.following.includes(user.user_id) === true ? "Following" : "Follow"
+            if (this.props.user.user.user_id === user.user_id) {
+                amFollowing = "This is you"
+            }
             //TODO check if current user
             return <div className="user_container">
                 <img src={user.profile_picture} alt=""/>
@@ -94,6 +99,9 @@ class Friends extends Component {
             </div>
         })
 
+        const imgSrc = this.props.user != null ? this.props.user.user.profile_picture : GNUser
+        const myName = this.props.user != null ? this.props.user.user.name : "Username"
+
         const title = this.state.allUserMode ? "All Users" : "Following"
 
         //maps (friend array + all users array)
@@ -101,7 +109,8 @@ class Friends extends Component {
         return (
             <div className="friends_container">
                 <div className="my_profile_container">
-                    <img src={GNUser} alt=""></img>
+                    <img src={imgSrc} alt=""></img>
+                    <p>{myName}</p>
                 </div>
                 <div className="my_friends_container">
                     <p>Space buddies</p>

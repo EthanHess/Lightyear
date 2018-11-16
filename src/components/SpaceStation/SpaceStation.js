@@ -14,12 +14,6 @@ export default class SpaceStation extends Component {
         
         return (
             <div>
-                <div className="ss_sub_header">
-                    <div>
-                        <button></button>
-                        <button></button>
-                    </div>
-                </div>
                 <div className="map_container">
                     <MapContainer /> 
                 </div>

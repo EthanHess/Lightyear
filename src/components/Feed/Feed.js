@@ -142,6 +142,14 @@ class Feed extends Component {
         })
     }
 
+    deletePost = (id) => {
+        const { user } = this.props; 
+        const authorId = user.user.user_id; 
+        axios.delete(`/api/posts/${authorId}/${id}`).then(response => { 
+            this.setState({ posts: response.data }); 
+        }); 
+    }
+
     render() {
 
         const postsMapped = this.state.posts.map(post => {
@@ -152,6 +160,7 @@ class Feed extends Component {
                 title={post.title}
                 authorId={post.author_id}
                 user={this.props.user}
+                deleteFn={this.deletePost}
             /> 
         })
 
