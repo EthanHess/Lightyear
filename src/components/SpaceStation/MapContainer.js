@@ -16,7 +16,7 @@ const navStyle = {
 export default class MapContainer extends Component {
     constructor() {
       super()
-      this.state = { //fetch ll from space station api
+      this.state = { 
         viewport: {
           latitude: 37.785164,
           longitude: -100,
@@ -48,11 +48,31 @@ export default class MapContainer extends Component {
       )
     }
 
-    fetchISSData = () => {
+    componentDidMount() {
+      this.fetchISSData()
+    }
 
+    fetchISSData = () => {
+      const url = "http://api.open-notify.org/iss-now.json"
+      axios.get(url).then(response => {
+        console.log('iss data', response.data.iss_position)
+        this.setState({
+          viewport: { 
+            ...this.state.viewport,
+            latitude: +response.data.iss_position.latitude,
+            longitude: +response.data.iss_position.longitude, 
+          },
+           //Do we need both? 
+          markerLat: +response.data.iss_position.latitude, 
+          markerLong: +response.data.iss_position.longitude
+        })
+      }).catch(error => {
+        console.log('error fetching ISS data', error)
+      })
     }
 
     render() {
+      console.log(this.state)
       const { viewport, markerLat, markerLong, offsetLeft, offsetTop } = this.state;
       return (
         <MapGL
