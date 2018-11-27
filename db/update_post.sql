@@ -1,0 +1,1 @@
+update sg_posts set title = $1 where id = $2

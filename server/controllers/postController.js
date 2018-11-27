@@ -49,6 +49,15 @@ module.exports = {
 
     }, 
     updatePost: (req, res, next) => {
-
+        const dbInstance = req.app.get('db'); 
+        const { params } = req; //May not need author ID
+        const { updateText } = req.body; 
+        console.log('req.body for update backend', updateText, req.body)
+        dbInstance.update_post([updateText, params.id])
+        .then(newPost => res.status(200).send(newPost))
+        .catch(error => {
+            res.status(500).send({errorMessage: "Oops! Something went wrong. Our engineers have been informed!"});
+            console.log('post update error', error)
+        })
     }
 }

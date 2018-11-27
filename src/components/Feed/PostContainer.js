@@ -23,10 +23,23 @@ export default class PostContainer extends Component {
         this.fetchLikeCount()
     }
 
-    updatePostHandler = (updateText, postId) => {
-        axios.put(`/api/posts/${this.props.user.user.user_id}/${postId}`, { updateText }).then(response => {
-            this.setState({ archives: response.data }); 
-        }); 
+    updatePostHandler = (e, postId, authorId) => {
+        console.log('update hit', postId, authorId)
+        // if (this.props.user.user.user_id !== authorId) {
+        //     return
+        // }
+        console.log('this.props', this.props)
+        console.log('e.key', e.key)
+        if (e.key === "Enter") {
+            const reqBody = {
+                updateText: e.target.value
+            }
+            console.log('update text', reqBody)
+            axios.put(`/api/posts/${this.props.user.user.user_id}/${postId}`, reqBody).then(response => {
+                //Refresh here
+                console.log('response', response.data)
+            });
+        }
     }
 
     likeHandler = (id) => {
@@ -98,6 +111,7 @@ export default class PostContainer extends Component {
                     </div>
                     <div className="button_container">
                         {/* Add input for update here */}
+                        <input onKeyPress={(e) => this.updatePostHandler(e, id, authorId)}/>
                         <button onClick={ isCurrent ? () => editFn(id) : this.nothing }>{isCurrent ? "Edit" : ""}</button>
                         <button onClick={ isCurrent ? () => deleteFn(id) : this.nothing }>{isCurrent ? "Delete" : ""}</button>
                     </div>
