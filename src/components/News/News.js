@@ -101,7 +101,17 @@ class News extends Component {
     }
 
     searchTapped = () => {
-
+        const searchString = this.state.searchString
+        if (this.state.videoMode === false) {
+            const newArr = this.state.archives.filter(archive => archive.title
+            .includes(searchString))
+            console.log('new arr from searc', newArr)
+            this.setState({
+                mainNewsFeed: newArr
+            })
+        } else {
+            console.log('videos')
+        }
     }
 
     //Returns a lot (slow), maybe return 10 - 20 or load/render in pieces
@@ -117,7 +127,7 @@ class News extends Component {
     }
 
     fetchNews() {
-        // --- TODO credit Google for their API! ---
+        // --- TODO credit Google for their API ---
         var url = 'https://newsapi.org/v2/everything?' +
         'q=Nasa&' +
         'from=2018-10-29&' +
@@ -177,7 +187,7 @@ class News extends Component {
                     <div className="search_div">
                         <img src={search} alt=""/>
                         <input placeholder=" Search" onChange={(e) => this.handleInput(e.target.value)}></input>
-                        <button>Search</button>
+                        <button onClick={this.searchTapped}>Search</button>
                     </div>
                     <div className="type_div">
                         <img src={imgSrc} alt=""/>

@@ -50,15 +50,10 @@ create table if not exists sg_likes (
 -- alter table to add media? 
 create table if not exists sg_comments (
     id serial primary key, 
-    post_id int not null, --eventually add reference (alter table)
-    user_id text not null, 
+    post_id int not null references sg_posts (id),
+    user_id text not null references sg_users (user_id), 
     author_name text not null, 
     author_image text not null, 
     comment_text text not null, 
     comment_date text not null --date string
 );
-
--- JOIN EXAMPLE
--- SELECT helo_posts.author_id, helo_users.auth0_id, helo_posts.title, helo_users.profile_picture
--- FROM helo_posts
--- INNER JOIN helo_users ON helo_posts.author_id=helo_users.auth0_id;

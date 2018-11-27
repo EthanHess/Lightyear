@@ -110,3 +110,17 @@
     color: darkblue; 
 }
 
+@media screen and (max-width: 700px) {
+    .my_friends_container > button {
+        font-size: 12px; 
+    }
+    .my_friends_container > p {
+        font-size: 15px; 
+    }
+    .user_container > p {
+        font-size: 12px; 
+    }
+    .user_container > button {
+        font-size: 14px; 
+    }
+}

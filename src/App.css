@@ -40,6 +40,9 @@
   color: white; 
   background: darkblue; 
   margin: auto; 
+  font-family: 'Courier New', Courier, monospace; 
+  font-size: 12px; 
+  font-weight: bold; 
   width: 20%; 
   height: 30%;
 }
@@ -251,16 +254,16 @@
 
 @media screen and (max-width: 700px) {
   .news_img, .friends_img, .ss_img {
-    min-width: 50px; 
-    min-height: 50px;
-    max-width: 50px;
-    max-height: 50px; 
+    min-width: 40px; 
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px; 
     margin: auto; 
   }
   .news_bubble, .friends_bubble, .space_station_bubble {
     width: 25%; 
     height: 25%; 
-    background: transparent; 
+    /* background: transparent;  */
     border-width: 2px; 
     border-style: solid; 
     border-radius: 20px; 
@@ -285,6 +288,11 @@
     width: 40px; 
     height: 40px;
   }
+  .right_nav_utils > button { 
+    width: 40px; 
+    height: 40px;
+    font-size: 8px; 
+  }
   .logo {
     max-width: 50px; 
     max-height: 50px;
@@ -305,7 +313,7 @@
     animation-delay: 0s;
   }
   .main_button {
-    font-size: 24px; 
+    font-size: 16px; 
   }
 }
 

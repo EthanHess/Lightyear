@@ -5,8 +5,13 @@
     justify-content: space-evenly; 
     margin: auto; 
     color: white;
-    background: black;  
+    margin-top: 10px; 
+    font-family: 'Courier New', Courier, monospace; 
+    font-weight: bold; 
+    background: rgb(28, 7, 148); 
+    border-radius: 10px;
 }
+
 .image_upload_container {
     width: 100%; 
     height: 400px; 
@@ -19,6 +24,8 @@
     width: 50%; 
     margin-left: 25%; 
     height: 40px; 
+    font-family: 'Courier New', Courier, monospace; 
+    font-weight: bold; 
 }
 .image_upload_container > button {
     background: rgb(10, 10, 80); 
@@ -36,7 +43,7 @@
 .feed_parent {
     width: 100vw; 
     height: 100vh; 
-    background: rgb(5, 5, 56); 
+    background: rgb(2, 2, 92); 
     display: flex; 
     /* justify-content: space-between;  */
     flex-direction: column; 
@@ -76,4 +83,6 @@
     color: white; 
     background: rgb(15, 10, 109); 
     border-radius: 10px; 
+    font-family: 'Courier New', Courier, monospace; 
+    font-weight: bold; 
 }

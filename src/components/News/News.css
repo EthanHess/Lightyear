@@ -95,6 +95,8 @@
     color: white; 
     border-radius: 5px; 
     margin: auto; 
+    font-family: 'Courier New', Courier, monospace; 
+    font-weight: bold; 
 }
 
 .search_div > button:hover {
@@ -200,4 +202,18 @@
 .archive_container > p {
     text-align: center; 
     color: white;
+}
+
+@media screen and (max-width: 700px) {
+    .button_container_news > button {
+        width: 30%; 
+        color: white; 
+        background: darkblue; 
+        border-radius: 5px; 
+        font-size: 10px; 
+        text-align: center;
+    }
+    .feed_cell > p {
+        font-size: 14px; 
+    }
 }
